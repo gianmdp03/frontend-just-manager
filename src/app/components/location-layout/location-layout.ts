@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavItem } from '../../models/nav-item';
 import { Navbar } from '../navbar/navbar';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-location-layout',
-  imports: [Navbar, RouterLink],
+  imports: [Navbar, RouterLink, RouterOutlet],
   templateUrl: './location-layout.html',
   styleUrl: './location-layout.css',
 })

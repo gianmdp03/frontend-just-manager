@@ -27,7 +27,7 @@ export const routes: Routes = [
         children: [
             {path: "", loadComponent: () => CustomerList},
             {path: "create", loadComponent: () => CustomerForm},
-            {path: "/:id", loadComponent: () => CustomerDetail}
+            {path: ":id", loadComponent: () => CustomerDetail}
         ]
     },
     {
@@ -36,7 +36,7 @@ export const routes: Routes = [
         children: [
             {path: "", loadComponent: () => InventoryItemList},
             {path: "create", loadComponent: () => InventoryItemForm},
-            {path: "/:id", loadComponent: () => InventoryItemDetail}
+            {path: ":id", loadComponent: () => InventoryItemDetail}
         ]
     },
     {
@@ -45,7 +45,7 @@ export const routes: Routes = [
         children: [
             {path: "", loadComponent: () => LocationList},
             {path: "create", loadComponent: () => LocationForm},
-            {path: "/:id", loadComponent: () => LocationDetail}
+            {path: ":id", loadComponent: () => LocationDetail}
         ]
     },
     {
@@ -54,7 +54,7 @@ export const routes: Routes = [
         children: [
             {path: "", loadComponent: () => OrderList},
             {path: "create", loadComponent: () => OrderForm},
-            {path: "/:id", loadComponent: () => OrderDetail}
+            {path: ":id", loadComponent: () => OrderDetail}
         ]
     },
     {
@@ -63,7 +63,7 @@ export const routes: Routes = [
         children: [
             {path: "", loadComponent: () => ProductList},
             {path: "create", loadComponent: () => ProductForm},
-            {path: "/:id", loadComponent: () => ProductDetail}
+            {path: ":id", loadComponent: () => ProductDetail}
         ]
     }
 ];
