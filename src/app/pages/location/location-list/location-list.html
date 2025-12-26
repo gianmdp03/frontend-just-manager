@@ -1,1 +1,22 @@
-<p>location-list works!</p>
+<section>
+  @for (location of locations; track location.id) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ location.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <a matButton>Ver detalle</a>
+      <button matButton>Editar</button>
+      <button matButton>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</section>
+
+<mat-paginator
+    [length]="totalElements"              
+    [pageSize]="pageSize"                 
+    [pageIndex]="pageIndex"
+    (page)="changePage($event)"        
+    aria-label="Seleccionar página">
+</mat-paginator>

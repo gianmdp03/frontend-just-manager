@@ -1,0 +1,9 @@
+section{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+mat-card{
+    margin: 1.25rem;
+    padding: 1.25rem;
+    background: #161215;
+}

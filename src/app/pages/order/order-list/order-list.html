@@ -1,1 +1,29 @@
-<p>order-list works!</p>
+<section>
+  @for (order of orders; track order.id) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ order.customer.fullname }}</mat-card-title>
+      <mat-card-subtitle>{{ order.saleDate }}</mat-card-subtitle>
+      <mat-card-content>
+        @for (orderItem of order.orderItems; track orderItem.id) {
+        <p>{{ orderItem.product }}</p>
+        <p>{{ orderItem.amount }}</p>
+        }
+      </mat-card-content>
+    </mat-card-header>
+    <mat-card-actions>
+      <a matButton>Ver detalle</a>
+      <button matButton>Editar</button>
+      <button matButton>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</section>
+
+<mat-paginator
+    [length]="totalElements"              
+    [pageSize]="pageSize"                 
+    [pageIndex]="pageIndex"
+    (page)="changePage($event)"        
+    aria-label="Seleccionar página">
+</mat-paginator>

@@ -2,8 +2,8 @@
   @for (customer of customers; track customer.id) {
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title class="text-white!">{{customer.fullname}}</mat-card-title>
-      <mat-card-subtitle class="text-white!">{{customer.phoneNumber}}</mat-card-subtitle>
+      <mat-card-title>{{customer.fullname}}</mat-card-title>
+      <mat-card-subtitle>{{customer.phoneNumber}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
       <a matButton>Ver</a>
@@ -13,3 +13,11 @@
   </mat-card>
   }
 </section>
+
+<mat-paginator
+    [length]="totalElements"              
+    [pageSize]="pageSize"                 
+    [pageIndex]="pageIndex"
+    (page)="changePage($event)"        
+    aria-label="Seleccionar página">
+</mat-paginator>

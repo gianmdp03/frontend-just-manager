@@ -1,1 +1,16 @@
-<p>customer-form works!</p>
+<form [formGroup]="customerForm" (submit)="onSubmit()" class="flex flex-col">
+    <mat-form-field>
+        <mat-label>
+            Nombre completo
+        </mat-label>
+        <input type="text" matInput formControlName="fullname">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Teléfono
+        </mat-label>
+        <input type="number" matInput formControlName="phoneNumber">
+    </mat-form-field>
+
+    <button type="submit" matButton="filled" [disabled]=customerForm.invalid>Guardar</button>
+</form>

@@ -1,1 +1,23 @@
-<p>product-list works!</p>
+<section>
+  @for (product of products; track product.id) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="product.imageUrl" alt="" />
+    <mat-card-actions>
+      <a matButton>Ver detalle</a>
+      <button matButton>Editar</button>
+      <button matButton>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</section>
+
+<mat-paginator
+    [length]="totalElements"              
+    [pageSize]="pageSize"                 
+    [pageIndex]="pageIndex"
+    (page)="changePage($event)"        
+    aria-label="Seleccionar página">
+</mat-paginator>

@@ -1,11 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatCardModule } from "@angular/material/card";
+import { InventoryItemService } from '../../../services/inventory-item-service';
+import { InventoryItemDetail } from '../../../models/inventory-item/inventory-item-detail';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-inventory-item-list',
-  imports: [],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule],
   templateUrl: './inventory-item-list.html',
   styleUrl: './inventory-item-list.css',
 })
-export class InventoryItemList {
+export class InventoryItemList implements OnInit{
+  totalElements = 0;
+  pageIndex = 0;
+  pageSize = 18;
 
+  inventoryItemService = inject(InventoryItemService);
+  inventoryItems: InventoryItemDetail[] = [];
+
+  ngOnInit(): void {
+    this.getInventoryItems();
+  }
+
+  getInventoryItems(){
+    this.inventoryItemService.getInventoryItems(this.pageIndex, this.pageSize).subscribe({
+      next: (data) => {
+        this.inventoryItems = data.content;
+        this.totalElements = data.totalElements;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  changePage(event: PageEvent){
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getInventoryItems();
+  }
 }

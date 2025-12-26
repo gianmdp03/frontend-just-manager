@@ -1,1 +1,28 @@
-<p>inventory-item-list works!</p>
+<section>
+  @for (inventoryItem of inventoryItems; track inventoryItem.id) {
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>{{ inventoryItem.product.name }}</mat-card-title>
+      <mat-card-subtitle class="text-white!">{{ inventoryItem.stock }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ inventoryItem.expireDate }}</p>
+        <p>{{ inventoryItem.location.name }}</p>
+    </mat-card-content>
+    <img mat-card-image [src]="inventoryItem.product.imageUrl" alt="" />
+    <mat-card-actions>
+      <a matButton>Ver</a>
+      <button matButton>Editar</button>
+      <button matButton>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</section>
+
+<mat-paginator
+    [length]="totalElements"              
+    [pageSize]="pageSize"                 
+    [pageIndex]="pageIndex"
+    (page)="changePage($event)"        
+    aria-label="Seleccionar página">
+</mat-paginator>
