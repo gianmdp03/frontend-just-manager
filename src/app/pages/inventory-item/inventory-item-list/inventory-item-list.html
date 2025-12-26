@@ -3,7 +3,7 @@
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>{{ inventoryItem.product.name }}</mat-card-title>
-      <mat-card-subtitle class="text-white!">{{ inventoryItem.stock }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ inventoryItem.stock }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <p>{{ inventoryItem.expireDate }}</p>
@@ -13,7 +13,7 @@
     <mat-card-actions>
       <a matButton>Ver</a>
       <button matButton>Editar</button>
-      <button matButton (click)=deleteInventoryItem(inventoryItem.id)>Eliminar</button>
+      <button matButton (click)="deleteInventoryItem(inventoryItem.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
   }

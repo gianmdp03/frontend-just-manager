@@ -42,6 +42,10 @@ export class InventoryItemList implements OnInit{
         next:()=>{
           alert("Ítem de inventario eliminado");
           this.inventoryItems = this.inventoryItems.filter(p => p.id !== id);
+        },
+        error:(error)=>{
+          alert("Error al eliminar");
+          
         }
       })
     }

@@ -42,6 +42,10 @@ export class LocationList implements OnInit{
         next: ()=> {
           alert("Ubicación eliminada correctamente");
           this.locations = this.locations.filter(p => p.id !== id);
+        },
+        error:(error)=>{
+          alert("Error al eliminar");
+          
         }
       })
     }

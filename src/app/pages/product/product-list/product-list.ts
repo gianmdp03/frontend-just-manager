@@ -36,6 +36,20 @@ export class ProductList implements OnInit{
     })
   }
 
+  deleteProduct(id:string){
+    if(confirm("Eliminar este producto?")){
+      this.productService.deleteProduct(id).subscribe({
+        next:()=>{
+          alert("Producto eliminado con exito");
+          this.products = this.products.filter(p=>p.id !== id);
+        },
+        error:(error)=>{
+          alert("Error al eliminar el producto");
+        }
+      })
+    }
+  }
+
   changePage(event: PageEvent){
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;

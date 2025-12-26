@@ -36,6 +36,21 @@ export class OrderList implements OnInit{
     })
   }
 
+  deleteOrder(id:string){
+    if(confirm("Eliminar esta venta?"))
+    {
+      this.orderService.deleteOrder(id).subscribe({
+        next:()=>{
+          alert("Venta eliminada correctamente");
+          this.orders = this.orders.filter(p => p.id !== id);
+        },
+        error:(error)=>{
+          alert("Error al eliminar");
+        }
+      })
+    }
+  }
+
   changePage(event: PageEvent){
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;

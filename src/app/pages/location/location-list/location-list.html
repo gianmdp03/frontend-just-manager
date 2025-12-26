@@ -7,7 +7,7 @@
     <mat-card-actions>
       <a matButton>Ver detalle</a>
       <button matButton>Editar</button>
-      <button matButton>Eliminar</button>
+      <button matButton (click)="deleteLocation(location.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
   }
