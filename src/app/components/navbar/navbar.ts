@@ -9,5 +9,5 @@ import { RouterLink } from "@angular/router";
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  //items = input.required<NavItem[]>();
+  items = input.required<NavItem[]>();
 }
