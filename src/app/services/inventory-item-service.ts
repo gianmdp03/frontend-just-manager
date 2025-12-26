@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { InventoryItemRequest } from '../models/inventory-item/inventory-item-request';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,10 @@ export class InventoryItemService {
     .set("page", page.toString())
     .set("size", size.toString())
     return this.http.get<any>(this.apiUrl, {params});
+  }
+
+  postInventoryItems(inventoryItem: InventoryItemRequest){
+    return this.http.post<any>(this.apiUrl, inventoryItem);
   }
 
   deleteInventoryItem(id:string){

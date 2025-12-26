@@ -1,1 +1,30 @@
-<p>inventory-item-form works!</p>
+<form [formGroup]="formGroup" (submit)="onSubmit()">
+  <mat-form-field>
+    <mat-label> Producto </mat-label>
+    <mat-select formControlName="productId">
+      @for (product of products; track product.id) {
+      <mat-option [value]="product.id">{{ product.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-label> Ubicación </mat-label>
+  <mat-select formControlName="locationId">
+    @for (location of locations; track location.id) {
+    <mat-option [value]="location.id">{{ location.name }}</mat-option>
+    }
+  </mat-select>
+  <mat-form-field>
+    <mat-label> Stock </mat-label>
+    <input type="number" matItem formControlName="stock" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label> Fecha de vencimiento </mat-label>
+    <input matInput [matDatepicker]="picker" [min]="date" />
+    <mat-hint>DD/MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker">
+      <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button type="submit" [disabled]="formGroup.invalid">Guardar</button>
+</form>
