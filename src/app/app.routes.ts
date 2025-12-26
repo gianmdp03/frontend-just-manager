@@ -19,8 +19,13 @@ import { ProductLayout } from './components/product-layout/product-layout';
 import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
 import { ProductDetail } from './pages/product/product-detail/product-detail';
+import { HomeLayout } from './components/home-layout/home-layout';
 
 export const routes: Routes = [
+    {
+        path:"",
+        component: HomeLayout
+    },
     {
         path:"customers",
         component: CustomerLayout,
@@ -40,7 +45,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path:"location",
+        path:"locations",
         component: LocationLayout,
         children: [
             {path: "", loadComponent: () => LocationList},

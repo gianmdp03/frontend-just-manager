@@ -1,3 +1,6 @@
-h1{
-    font-size: 1rem;
+nav{
+    background-color: #810081;
+}
+a[matButton] {
+    font-size: 1.3rem;
 }
