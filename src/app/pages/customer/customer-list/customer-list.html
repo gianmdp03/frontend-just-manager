@@ -1,8 +1,9 @@
 <section>
+  @for (customer of customers; track customer.id) {
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title class="text-white!">NOMBRE</mat-card-title>
-      <mat-card-subtitle class="text-white!">TELÉFONO</mat-card-subtitle>
+      <mat-card-title class="text-white!">{{customer.fullname}}</mat-card-title>
+      <mat-card-subtitle class="text-white!">{{customer.phoneNumber}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
       <a matButton>Ver</a>
@@ -10,28 +11,5 @@
       <button matButton>Eliminar</button>
     </mat-card-actions>
   </mat-card>
-
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>NOMBRE</mat-card-title>
-      <mat-card-subtitle>TELÉFONO</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button matButton>Ver</button>
-      <button matButton>Editar</button>
-      <button matButton>Eliminar</button>
-    </mat-card-actions>
-  </mat-card>
-
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>NOMBRE</mat-card-title>
-      <mat-card-subtitle>TELÉFONO</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button matButton>Ver</button>
-      <button matButton>Editar</button>
-      <button matButton>Eliminar</button>
-    </mat-card-actions>
-  </mat-card>
+  }
 </section>
