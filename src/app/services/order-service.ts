@@ -14,4 +14,9 @@ export class OrderService {
     .set("size", size.toString())
     return this.http.get<any>(this.apiUrl, {params});
   }
+
+  deleteOrder(id:string){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

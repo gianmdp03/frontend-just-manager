@@ -14,4 +14,9 @@ export class InventoryItemService {
     .set("size", size.toString())
     return this.http.get<any>(this.apiUrl, {params});
   }
+
+  deleteInventoryItem(id:string){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

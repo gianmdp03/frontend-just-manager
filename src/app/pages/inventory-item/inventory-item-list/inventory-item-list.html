@@ -13,7 +13,7 @@
     <mat-card-actions>
       <a matButton>Ver</a>
       <button matButton>Editar</button>
-      <button matButton>Eliminar</button>
+      <button matButton (click)=deleteInventoryItem(inventoryItem.id)>Eliminar</button>
     </mat-card-actions>
   </mat-card>
   }

@@ -14,4 +14,9 @@ export class ProductService {
     .set("size", size.toString())
     return this.http.get<any>(this.apiUrl, {params});
   }
+
+  deleteProduct(id:string){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

@@ -36,6 +36,17 @@ export class InventoryItemList implements OnInit{
     })
   }
 
+  deleteInventoryItem(id:string){
+    if(confirm("Eliminar este ítem de inventario?")){
+      this.inventoryItemService.deleteInventoryItem(id).subscribe({
+        next:()=>{
+          alert("Ítem de inventario eliminado");
+          this.inventoryItems = this.inventoryItems.filter(p => p.id !== id);
+        }
+      })
+    }
+  }
+
   changePage(event: PageEvent){
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;

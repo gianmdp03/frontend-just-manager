@@ -36,7 +36,7 @@ export class CustomerForm {
     this.customerService.postCustomers(this.customerForm.value).subscribe({
       next:(data)=>{
         alert("Cliente guardado correctamente");
-        this.router.navigate(["/customer"]);
+        this.router.navigate(["/customers"]);
       },
       error:(error)=>{
         console.log(error);

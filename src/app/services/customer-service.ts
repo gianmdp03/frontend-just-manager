@@ -20,4 +20,9 @@ export class CustomerService {
   postCustomers(data: CustomerRequest){
     return this.http.post<any>(this.apiUrl, data);
   }
+
+  deleteCustomer(id:string){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

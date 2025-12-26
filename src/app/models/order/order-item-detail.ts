@@ -1,7 +1,7 @@
 import { ProductDetail } from "../product/product-detail";
 
 export interface OrderItemDetail {
-    id:number;
+    id:string;
     product:ProductDetail;
     amount:number;
 }

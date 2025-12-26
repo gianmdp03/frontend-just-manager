@@ -1,7 +1,7 @@
 import { InventoryItemDetail } from "../inventory-item/inventory-item-detail";
 
 export interface LocationDetail {
-    id:number;
+    id:string;
     name:string;
     inventoryItems:Omit<InventoryItemDetail, "location">[];
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { CustomerService } from '../../../services/customer-service';
@@ -15,7 +15,7 @@ export class CustomerList implements OnInit{
   totalElements = 0;
   pageIndex = 0;
   pageSize = 18;
-
+  cdRef = inject(ChangeDetectorRef);
   customerService = inject(CustomerService);
   customers:CustomerDetail[] = [];
 
@@ -28,12 +28,25 @@ export class CustomerList implements OnInit{
       next: (data) => {
         this.customers = data.content;
         this.totalElements = data.totalElements;
-        
       },
       error: (error) => {
         console.log(error);
       }
     })
+  }
+
+  deleteCustomer(id:string){
+    if(confirm("Eliminar este cliente?")){
+      this.customerService.deleteCustomer(id).subscribe({
+        next:()=>{
+          alert("Cliente eliminado con exito");
+          this.customers = this.customers.filter(p => p.id !== id)
+        },
+        error:(error)=>{
+          console.log(error);
+        }
+      });
+    }
   }
 
   changePage(event: PageEvent){

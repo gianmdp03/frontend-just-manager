@@ -36,6 +36,17 @@ export class LocationList implements OnInit{
     })
   }
 
+  deleteLocation(id:string){
+    if(confirm("Eliminar esta ubicación?")){
+      this.locationService.deleteLocation(id).subscribe({
+        next: ()=> {
+          alert("Ubicación eliminada correctamente");
+          this.locations = this.locations.filter(p => p.id !== id);
+        }
+      })
+    }
+  }
+
   changePage(event: PageEvent){
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
