@@ -20,6 +20,11 @@ export class InventoryItemService {
     return this.http.post<any>(this.apiUrl, inventoryItem);
   }
 
+  patchInventoryItem(id:string, data:Partial<InventoryItemRequest>){
+      const url = `${this.apiUrl}/${id}`;
+      return this.http.patch<any>(url, data);
+  }
+
   deleteInventoryItem(id:string){
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);

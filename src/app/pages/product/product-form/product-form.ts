@@ -21,7 +21,7 @@ export class ProductForm {
   constructor() {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: ['', Validators.required],
+      imageUrl: ['']
     });
   }
 

@@ -6,7 +6,9 @@
       <mat-option [value]="product.id">{{ product.name }}</mat-option>
       }
     </mat-select>
-    
+    @if (productId?.invalid && productId?.touched) {
+      <p class="form-error">El producto es obligatorio</p>
+    }
   </mat-form-field>
   <mat-form-field>
   <mat-label> Ubicación </mat-label>
@@ -15,10 +17,16 @@
     <mat-option [value]="location.id">{{ location.name }}</mat-option>
     }
   </mat-select>
+  @if (locationId?.invalid && locationId?.touched) {
+    <p class="form-error">La ubicación es obligatorio</p>
+  }
   </mat-form-field>
   <mat-form-field>
     <mat-label> Stock </mat-label>
     <input type="number" matInput formControlName="stock" />
+    @if (stock?.invalid && stock?.touched) {
+      <p class="form-error">El stock es obligatorio</p>
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label> Fecha de vencimiento </mat-label>
@@ -26,6 +34,9 @@
     <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+    @if (expireDate?.invalid && expireDate?.touched) {
+      <p class="form-error">La fecha de vencimiento es obligatoria</p>
+    }
   </mat-form-field>
   <button matButton="filled" type="submit" [disabled]="formGroup.invalid">Guardar</button>
 </form>

@@ -21,6 +21,11 @@ export class CustomerService {
     return this.http.post<any>(this.apiUrl, data);
   }
 
+  patchCustomer(id:string, data:Partial<CustomerRequest>){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<any>(url, data);
+  }
+
   deleteCustomer(id:string){
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);

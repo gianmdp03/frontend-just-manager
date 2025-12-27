@@ -8,6 +8,9 @@
             <mat-option [value]="customer.id">{{customer.fullname}}</mat-option>
         }
         </mat-select>
+        @if (customerId?.invalid && customerId?.touched) {
+            <p class="form-error">El cliente es obligatorio</p>
+        }
     </mat-form-field>
     <button type="submit" matButton="filled" [disabled]="customerFormGroup.invalid">Seleccionar cliente</button>
 </form>
@@ -22,6 +25,9 @@
                 <mat-option [value]="product.id">{{product.name}}</mat-option>
             }
         </mat-select>
+        @if (productId?.invalid && productId?.touched) {
+            <p class="form-error">El producto es obligatorio</p>
+        }
     </mat-form-field>
 
     <mat-form-field>
@@ -29,6 +35,9 @@
             Cantidad
         </mat-label>
         <input type="number" matInput formControlName="amount">
+        @if (amount?.invalid && amount?.touched) {
+            <p class="form-error">La cantidad es obligatoria</p>
+        }
     </mat-form-field>
     <button type="submit" matButton="filled" [disabled]="formGroup.invalid" class="mb-4!">Agregar ítem de venta</button>
 </form>

@@ -20,6 +20,11 @@ export class ProductService {
     return this.http.post<any>(this.apiUrl, data);
   }
 
+  patchProduct(id:string, data:Partial<ProductRequest>){
+      const url = `${this.apiUrl}/${id}`;
+      return this.http.patch<any>(url, data);
+  }
+
   deleteProduct(id:string){
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);

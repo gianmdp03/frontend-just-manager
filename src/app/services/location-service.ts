@@ -20,6 +20,11 @@ export class LocationService {
     return this.http.post<any>(this.apiUrl, data);
   }
 
+  patchLocation(id:string, data:Partial<LocationRequest>){
+      const url = `${this.apiUrl}/${id}`;
+      return this.http.patch<any>(url, data);
+  }
+
   deleteLocation(id:string){
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);

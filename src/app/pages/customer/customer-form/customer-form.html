@@ -4,12 +4,18 @@
             Nombre completo
         </mat-label>
         <input type="text" matInput formControlName="fullname">
+        @if (fullname?.invalid && fullname?.touched) {
+            <p class="form-error">El nombre es obligatorio</p>
+        }
     </mat-form-field>
     <mat-form-field>
         <mat-label>
             Teléfono
         </mat-label>
         <input type="number" matInput formControlName="phoneNumber">
+        @if (phoneNumber?.invalid && phoneNumber?.touched) {
+            <p class="form-error">El teléfono es obligatorio</p>
+        }
     </mat-form-field>
 
     <button type="submit" matButton="filled" [disabled]="customerForm.invalid">Guardar</button>

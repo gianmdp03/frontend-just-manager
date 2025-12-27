@@ -4,6 +4,9 @@
             Nombre
         </mat-label>
         <input type="text" matInput formControlName="name">
+        @if (name?.invalid && name?.touched) {
+            <p class="form-error">El nombre es obligatorio</p>
+        }
     </mat-form-field>
     <mat-form-field>
         <mat-label>
