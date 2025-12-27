@@ -16,31 +16,37 @@ export class CustomerForm {
   private fb = inject(FormBuilder);
   private customerService = inject(CustomerService);
   private router = inject(Router);
-  customerForm:FormGroup;
-  constructor(){
+  customerForm: FormGroup;
+  constructor() {
     this.customerForm = this.fb.group({
-      fullname : ["", Validators.required],
-      phoneNumber : ["", Validators.required]
+      fullname: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
     });
   }
+  get fullname() {
+    return this.customerForm.get('fullname');
+  }
 
-  onSubmit(){
+  get phoneNumber() {
+    return this.customerForm.get('phoneNumber');
+  }
+  onSubmit() {
     this.customerForm.markAllAsTouched();
-    if(this.customerForm.invalid){
+    if (this.customerForm.invalid) {
       return;
     }
     this.postCustomers();
   }
 
-  postCustomers(){
+  postCustomers() {
     this.customerService.postCustomers(this.customerForm.value).subscribe({
-      next:(data)=>{
-        alert("Cliente guardado correctamente");
-        this.router.navigate(["/customers"]);
+      next: (data) => {
+        alert('Cliente guardado correctamente');
+        this.router.navigate(['/customers']);
       },
-      error:(error)=>{
+      error: (error) => {
         console.log(error);
-      }
-    })
+      },
+    });
   }
 }

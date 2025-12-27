@@ -16,32 +16,39 @@ export class ProductForm {
   private fb = inject(FormBuilder);
   private productService = inject(ProductService);
   private router = inject(Router);
-  formGroup:FormGroup;
+  formGroup: FormGroup;
 
-  constructor(){
-    this.formGroup=this.fb.group({
-      name:["", Validators.required],
-      imageUrl:["", Validators.required]
+  constructor() {
+    this.formGroup = this.fb.group({
+      name: ['', Validators.required],
+      imageUrl: ['', Validators.required],
     });
   }
-  onSubmit(){
+
+  get name() {
+    return this.formGroup.get('name');
+  }
+
+  get imageUrl() {
+    return this.formGroup.get('imageUrl');
+  }
+  onSubmit() {
     this.formGroup.markAllAsTouched();
-    if(this.formGroup.invalid){
+    if (this.formGroup.invalid) {
       return;
     }
     this.postProduct();
   }
 
-  postProduct(){
+  postProduct() {
     this.productService.postProduct(this.formGroup.value).subscribe({
-      next:()=>{
-        alert("Producto creado con exito");
-        this.router.navigate(["/products"]);
+      next: () => {
+        alert('Producto creado con exito');
+        this.router.navigate(['/products']);
       },
-      error:(error)=>{
+      error: (error) => {
         console.log(error);
-        
-      }
-    })
+      },
+    });
   }
 }

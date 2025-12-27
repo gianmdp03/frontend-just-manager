@@ -42,6 +42,18 @@ export class OrderForm implements OnInit{
     });
   }
 
+  get productId() {
+    return this.formGroup.get('productId');
+  }
+
+  get amount() {
+    return this.formGroup.get('amount');
+  }
+
+  get customerId() {
+    return this.customerFormGroup.get('customerId');
+  }
+
   ngOnInit(): void {
     this.getProducts();
     this.getCustomers();

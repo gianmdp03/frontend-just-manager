@@ -16,31 +16,33 @@ export class LocationForm {
   private fb = inject(FormBuilder);
   private locationService = inject(LocationService);
   private router = inject(Router);
-  formGroup:FormGroup;
+  formGroup: FormGroup;
 
-  constructor(){
+  constructor() {
     this.formGroup = this.fb.group({
-      name: ["", Validators.required]
+      name: ['', Validators.required],
     });
   }
-
-  onSubmit(){
+  get name() {
+    return this.formGroup.get('name');
+  }
+  onSubmit() {
     this.formGroup.markAllAsTouched();
-    if(this.formGroup.invalid){
+    if (this.formGroup.invalid) {
       return;
     }
     this.postLocation();
   }
 
-  postLocation(){
+  postLocation() {
     this.locationService.postLocation(this.formGroup.value).subscribe({
-      next:()=>{
-        alert("Ubicación creada correctamente");
-        this.router.navigate(["/locations"]);
+      next: () => {
+        alert('Ubicación creada correctamente');
+        this.router.navigate(['/locations']);
       },
-      error:(error)=>{
+      error: (error) => {
         console.log(error);
-      }
-    })
+      },
+    });
   }
 }
