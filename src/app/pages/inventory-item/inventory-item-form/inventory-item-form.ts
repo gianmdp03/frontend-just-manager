@@ -71,9 +71,16 @@ export class InventoryItemForm implements OnInit {
     if(id){
       this.inventoryItemId = id;
       this.isEditMode = true;
+      this.productId?.disable();
+      this.expireDate?.disable();
       this.inventoryItemService.getInventoryItem(id).subscribe({
         next:(data)=>{
-          this.formGroup.patchValue(data);
+          const formData = {
+            ...data,
+            locationId: data.location.id,
+            productId: data.product.id
+          };
+          this.formGroup.patchValue(formData);
         },
         error:(error)=>{
           alert("Error al cargar el ítem de inventario");
