@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LocationService } from '../../../services/location-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-location-form',
@@ -12,16 +12,34 @@ import { Router } from '@angular/router';
   templateUrl: './location-form.html',
   styleUrl: './location-form.css',
 })
-export class LocationForm {
+export class LocationForm implements OnInit{
   private fb = inject(FormBuilder);
   private locationService = inject(LocationService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  locationId:string | null = null;
   formGroup: FormGroup;
 
   constructor() {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get("id");
+    if(id){
+      this.locationId = id;
+      this.locationService.getLocation(id).subscribe({
+        next:(data)=>{
+          this.formGroup.patchValue(data);
+        },
+        error:(error)=>{
+          console.log(error);
+          
+        }
+      });
+    }
   }
   get name() {
     return this.formGroup.get('name');
@@ -31,7 +49,22 @@ export class LocationForm {
     if (this.formGroup.invalid) {
       return;
     }
-    this.postLocation();
+    if(this.locationId){
+      this.locationService.patchLocation(this.locationId, this.formGroup.value).subscribe({
+        next:()=>{
+          alert("Ubicación editada correctamente");
+          this.router.navigate(["/locations"]);
+        },
+        error:(error)=>{
+          console.log(error);
+          
+        }
+      });
+    }
+    else{
+      this.postLocation();
+    }
+    
   }
 
   postLocation() {

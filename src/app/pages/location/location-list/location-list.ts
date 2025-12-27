@@ -5,10 +5,11 @@ import { LocationService } from '../../../services/location-service';
 import { LocationDetail } from '../../../models/location/location-detail';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-location-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, RouterLink],
   templateUrl: './location-list.html',
   styleUrl: './location-list.css',
 })

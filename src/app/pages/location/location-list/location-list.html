@@ -6,7 +6,7 @@
     </mat-card-header>
     <mat-card-actions>
       <a matButton>Ver detalle</a>
-      <button matButton>Editar</button>
+      <a matButton [routerLink]='["/locations/edit", location.id]'>Editar</a>
       <button matButton (click)="deleteLocation(location.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
