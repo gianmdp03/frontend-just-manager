@@ -12,13 +12,13 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.css',
 })
-export class CustomerForm implements OnInit{
+export class CustomerForm implements OnInit {
   private fb = inject(FormBuilder);
   private customerService = inject(CustomerService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  customerId:string | null = null;
-  isEditMode:boolean = false;
+  customerId: string | null = null;
+  isEditMode: boolean = false;
   customerForm: FormGroup;
   constructor() {
     this.customerForm = this.fb.group({
@@ -27,10 +27,18 @@ export class CustomerForm implements OnInit{
     });
   }
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get("id");
-    if(id){
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.customerId = id;
       this.isEditMode = true;
+      this.customerService.getCustomer(id).subscribe({
+        next: (customer) => {
+          this.customerForm.patchValue(customer);
+        },
+        error: (err) => {
+          alert('Error al cargar el cliente');
+        },
+      });
     }
   }
 
@@ -46,21 +54,19 @@ export class CustomerForm implements OnInit{
     if (this.customerForm.invalid) {
       return;
     }
-    if(this.isEditMode && this.customerId){
+    if (this.isEditMode && this.customerId) {
       this.customerService.patchCustomer(this.customerId, this.customerForm.value).subscribe({
-        next:()=>{
-          alert("Cliente editado correctamente");
+        next: () => {
+          alert('Cliente editado correctamente');
           this.router.navigate(['/customers']);
         },
-        error:(error)=>{
+        error: (error) => {
           console.log(error);
-        }
+        },
       });
-    }
-    else{
+    } else {
       this.postCustomers();
     }
-    
   }
 
   postCustomers() {
