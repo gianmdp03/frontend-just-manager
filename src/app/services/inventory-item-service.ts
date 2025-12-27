@@ -16,6 +16,11 @@ export class InventoryItemService {
     return this.http.get<any>(this.apiUrl, {params});
   }
 
+  getInventoryItem(id: string) {
+    const url = `${this.apiUrl}/id/${id}`;
+    return this.http.get<any>(url);
+  }
+
   postInventoryItems(inventoryItem: InventoryItemRequest){
     return this.http.post<any>(this.apiUrl, inventoryItem);
   }

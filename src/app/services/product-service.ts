@@ -16,6 +16,11 @@ export class ProductService {
     return this.http.get<any>(this.apiUrl, {params});
   }
 
+  getProduct(id: string) {
+    const url = `${this.apiUrl}/id/${id}`;
+    return this.http.get<any>(url);
+  }
+
   postProduct(data:ProductRequest){
     return this.http.post<any>(this.apiUrl, data);
   }

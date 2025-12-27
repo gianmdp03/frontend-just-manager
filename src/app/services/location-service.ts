@@ -16,6 +16,11 @@ export class LocationService {
     return this.http.get<any>(this.apiUrl, {params});
   }
 
+  getLocation(id: string) {
+    const url = `${this.apiUrl}/id/${id}`;
+    return this.http.get<any>(url);
+  }
+
   postLocation(data:LocationRequest){
     return this.http.post<any>(this.apiUrl, data);
   }

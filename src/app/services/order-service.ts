@@ -16,6 +16,11 @@ export class OrderService {
     return this.http.get<any>(this.apiUrl, {params});
   }
 
+  getOrder(id: string) {
+    const url = `${this.apiUrl}/id/${id}`;
+    return this.http.get<any>(url);
+  }
+
   postOrder(data: OrderItemRequest[], customerId:string){
     const url = `${this.apiUrl}/${customerId}`;
     return this.http.post<any>(url, data);
