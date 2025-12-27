@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,25 +18,28 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   templateUrl: './inventory-item-form.html',
   styleUrl: './inventory-item-form.css',
 })
-export class InventoryItemForm {
+export class InventoryItemForm implements OnInit{
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private inventoryItemService = inject(InventoryItemService);
   private productService = inject(ProductService);
   private locationService = inject(LocationService);
-  date = Date.now();
+  date = new Date();
   products:ProductDetail[] = [];
   locations:LocationDetail[] = [];
   formGroup:FormGroup;
   constructor(){
     this.formGroup = this.fb.group({
-      productId: [Validators.required],
-      locationId: [Validators.required],
-      stock: [[Validators.required, Validators.min(1)]],
-      expireDate: [Validators.required]
+      productId: ["", Validators.required],
+      locationId: ["", Validators.required],
+      stock: ["", [Validators.required, Validators.min(1)]],
+      expireDate: ["", Validators.required]
     });
   }
-
+  ngOnInit(): void {
+    this.getProducts();
+    this.getLocations();
+  }
   onSubmit(){
     this.formGroup.markAllAsTouched();
     if(this.formGroup.invalid){
