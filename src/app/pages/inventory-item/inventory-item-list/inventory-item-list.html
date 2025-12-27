@@ -12,7 +12,7 @@
     <img mat-card-image [src]="inventoryItem.product.imageUrl" alt="" />
     <mat-card-actions>
       <a matButton>Ver</a>
-      <button matButton>Editar</button>
+      <a matButton [routerLink]='["/inventory-items/edit", inventoryItem.id]'>Editar</a>
       <button matButton (click)="deleteInventoryItem(inventoryItem.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>

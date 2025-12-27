@@ -5,10 +5,11 @@ import { InventoryItemDetail } from '../../../models/inventory-item/inventory-it
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-inventory-item-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, RouterLink],
   templateUrl: './inventory-item-list.html',
   styleUrl: './inventory-item-list.css',
 })

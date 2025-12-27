@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { InventoryItemService } from '../../../services/inventory-item-service';
 import { ProductService } from '../../../services/product-service';
 import { LocationService } from '../../../services/location-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { ProductDetail } from '../../../models/product/product-detail';
 import { LocationDetail } from '../../../models/location/location-detail';
@@ -32,6 +32,9 @@ export class InventoryItemForm implements OnInit {
   private inventoryItemService = inject(InventoryItemService);
   private productService = inject(ProductService);
   private locationService = inject(LocationService);
+  private route = inject(ActivatedRoute);
+  isEditMode:boolean = false;
+  inventoryItemId:string | null = null;
   date = new Date();
   products: ProductDetail[] = [];
   locations: LocationDetail[] = [];
@@ -64,13 +67,40 @@ export class InventoryItemForm implements OnInit {
   ngOnInit(): void {
     this.getProducts();
     this.getLocations();
+    const id = this.route.snapshot.paramMap.get("id");
+    if(id){
+      this.inventoryItemId = id;
+      this.isEditMode = true;
+      this.inventoryItemService.getInventoryItem(id).subscribe({
+        next:(data)=>{
+          this.formGroup.patchValue(data);
+        },
+        error:(error)=>{
+          alert("Error al cargar el ítem de inventario");
+        }
+      });
+    }
   }
   onSubmit() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.invalid) {
       return;
     }
-    this.postInventoryItem();
+    if(this.inventoryItemId && this.isEditMode){
+      this.inventoryItemService.patchInventoryItem(this.inventoryItemId, this.formGroup.value).subscribe({
+        next:()=>{
+          alert("Ítem de inventario editado correctamente");
+          this.router.navigate(["/inventory-items"]);
+        },
+        error:(error)=>{
+          console.log(error);
+          
+        }
+      });
+    }
+    else{
+          this.postInventoryItem();
+    }
   }
   getProducts() {
     this.productService.getProducts(0, 1000).subscribe({
