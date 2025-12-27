@@ -5,9 +5,10 @@ import { CustomerService } from '../../../services/customer-service';
 import { CustomerDetail } from '../../../models/customer/customer-detail';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterLink } from "@angular/router";
 @Component({
   selector: 'app-customer-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, RouterLink],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.css',
 })

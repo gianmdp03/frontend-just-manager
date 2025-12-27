@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-actions>
       <a matButton>Ver</a>
-      <button matButton>Editar</button>
+      <a matButton [routerLink]='["/customers/edit", customer.id]'>Editar</a>
       <button matButton (click)="deleteCustomer(customer.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>

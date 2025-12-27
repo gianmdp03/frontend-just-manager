@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../../services/customer-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -12,10 +12,13 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.css',
 })
-export class CustomerForm {
+export class CustomerForm implements OnInit{
   private fb = inject(FormBuilder);
   private customerService = inject(CustomerService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  customerId:string | null = null;
+  isEditMode:boolean = false;
   customerForm: FormGroup;
   constructor() {
     this.customerForm = this.fb.group({
@@ -23,6 +26,14 @@ export class CustomerForm {
       phoneNumber: ['', Validators.required],
     });
   }
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get("id");
+    if(id){
+      this.customerId = id;
+      this.isEditMode = true;
+    }
+  }
+
   get fullname() {
     return this.customerForm.get('fullname');
   }
@@ -35,7 +46,21 @@ export class CustomerForm {
     if (this.customerForm.invalid) {
       return;
     }
-    this.postCustomers();
+    if(this.isEditMode && this.customerId){
+      this.customerService.patchCustomer(this.customerId, this.customerForm.value).subscribe({
+        next:()=>{
+          alert("Cliente editado correctamente");
+          this.router.navigate(['/customers']);
+        },
+        error:(error)=>{
+          console.log(error);
+        }
+      });
+    }
+    else{
+      this.postCustomers();
+    }
+    
   }
 
   postCustomers() {
