@@ -1,1 +1,36 @@
-<p>order-form works!</p>
+<form [formGroup]="customerFormGroup" (submit)="setSelectedCustomer()" class="flex flex-col">
+    <mat-form-field>
+        <mat-label>
+            Cliente
+        </mat-label>
+        <mat-select formControlName="customerId">
+        @for (customer of customers; track customer.id) {
+            <mat-option [value]="customer.id">{{customer.fullname}}</mat-option>
+        }
+        </mat-select>
+    </mat-form-field>
+    <button type="submit" matButton="filled" [disabled]="customerFormGroup.invalid">Seleccionar cliente</button>
+</form>
+
+<form [formGroup]="formGroup" (submit)="addOrderItemToList()" class="flex flex-col mt-4">
+    <mat-form-field>
+        <mat-label>
+            Producto
+        </mat-label>
+        <mat-select formControlName="productId">
+            @for (product of products; track product.id) {
+                <mat-option [value]="product.id">{{product.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Cantidad
+        </mat-label>
+        <input type="number" matInput formControlName="amount">
+    </mat-form-field>
+    <button type="submit" matButton="filled" [disabled]="formGroup.invalid" class="mb-4!">Agregar ítem de venta</button>
+</form>
+<button (click)="popOrderItem()" matButton="filled" [disabled]="isEmpty()">Eliminar último ítem de venta</button>
+<button (click)="postOrderItems()" matButton="filled" [disabled]="isEmpty()">Agregar venta</button>

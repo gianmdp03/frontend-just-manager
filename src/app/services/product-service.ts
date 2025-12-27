@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ProductRequest } from '../models/product/product-request';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,10 @@ export class ProductService {
     .set("page", page.toString())
     .set("size", size.toString())
     return this.http.get<any>(this.apiUrl, {params});
+  }
+
+  postProduct(data:ProductRequest){
+    return this.http.post<any>(this.apiUrl, data);
   }
 
   deleteProduct(id:string){
