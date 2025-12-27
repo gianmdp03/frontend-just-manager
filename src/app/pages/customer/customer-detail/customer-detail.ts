@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../../services/order-service';
 import { CustomerService } from '../../../services/customer-service';
 import { MatCardModule } from '@angular/material/card';
+import { CustomerDet } from '../../../models/customer/customer-det';
 
 @Component({
   selector: 'app-customer-detail',
@@ -13,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 export class CustomerDetail implements OnInit{
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  customer = signal<CustomerDetail|null>(null);
+  customer = signal<CustomerDet|null>(null);
   orderService = inject(OrderService);
   customerService = inject(CustomerService);
 

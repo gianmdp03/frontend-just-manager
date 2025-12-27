@@ -6,10 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { OrderService } from '../../../services/order-service';
 import { ProductService } from '../../../services/product-service';
-import { ProductDetail } from '../../../models/product/product-detail';
+import { ProductDet } from '../../../models/product/product-del';
 import { OrderItemRequest } from '../../../models/order/order-item-request';
 import { CustomerService } from '../../../services/customer-service';
-import { CustomerDetail } from '../../../models/customer/customer-detail';
+import { CustomerDet } from '../../../models/customer/customer-det';
 import { MatSelectModule } from "@angular/material/select";
 
 @Component({
@@ -27,8 +27,8 @@ export class OrderForm implements OnInit{
   private customerFb = inject(FormBuilder);
   formGroup:FormGroup;
   customerFormGroup:FormGroup;
-  customers:CustomerDetail[] = [];
-  products:ProductDetail[] = [];
+  customers:CustomerDet[] = [];
+  products:ProductDet[] = [];
   orderItemsToBeAdded:OrderItemRequest[] = [];
   selectedCustomer:string = "";
 

@@ -6,7 +6,7 @@
       <mat-card-subtitle>{{customer.phoneNumber}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-      <a matButton>Ver</a>
+      <a matButton [routerLink]='["/customers", customer.id]'>Ver</a>
       <a matButton [routerLink]='["/customers/edit", customer.id]'>Editar</a>
       <button matButton (click)="deleteCustomer(customer.id)">Eliminar</button>
     </mat-card-actions>

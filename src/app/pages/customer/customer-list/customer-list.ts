@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { CustomerService } from '../../../services/customer-service';
-import { CustomerDetail } from '../../../models/customer/customer-detail';
+import { CustomerDet } from '../../../models/customer/customer-det';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterLink } from "@angular/router";
@@ -18,7 +18,7 @@ export class CustomerList implements OnInit{
   pageSize = 18;
   cdRef = inject(ChangeDetectorRef);
   customerService = inject(CustomerService);
-  customers:CustomerDetail[] = [];
+  customers:CustomerDet[] = [];
 
   ngOnInit(): void{
     this.getCustomers();

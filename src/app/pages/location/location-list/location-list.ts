@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { LocationService } from '../../../services/location-service';
-import { LocationDetail } from '../../../models/location/location-detail';
+import { LocationDet } from '../../../models/location/location-det';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterLink } from "@angular/router";
@@ -19,7 +19,7 @@ export class LocationList implements OnInit{
   pageSize = 18;
 
   locationService = inject(LocationService);
-  locations:LocationDetail[]=[];
+  locations:LocationDet[]=[];
 
   ngOnInit(): void {
     this.getLocations();

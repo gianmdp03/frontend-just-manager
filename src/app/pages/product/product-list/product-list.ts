@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ProductService } from '../../../services/product-service';
-import { ProductDetail } from '../../../models/product/product-detail';
+import { ProductDet } from '../../../models/product/product-del';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterLink } from "@angular/router";
@@ -19,7 +19,7 @@ export class ProductList implements OnInit{
   pageSize = 18;
 
   productService = inject(ProductService);
-  products:ProductDetail[] = [];
+  products:ProductDet[] = [];
 
   ngOnInit(): void {
     this.getProducts();

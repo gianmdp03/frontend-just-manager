@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from "@angular/material/card";
 import { InventoryItemService } from '../../../services/inventory-item-service';
-import { InventoryItemDetail } from '../../../models/inventory-item/inventory-item-detail';
+import { InventoryItemDet } from '../../../models/inventory-item/inventory-item-det';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
@@ -19,7 +19,7 @@ export class InventoryItemList implements OnInit{
   pageSize = 18;
 
   inventoryItemService = inject(InventoryItemService);
-  inventoryItems: InventoryItemDetail[] = [];
+  inventoryItems: InventoryItemDet[] = [];
 
   ngOnInit(): void {
     this.getInventoryItems();

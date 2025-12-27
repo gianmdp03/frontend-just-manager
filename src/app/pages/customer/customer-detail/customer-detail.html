@@ -1,0 +1,31 @@
+@if (customer(); as c) {
+
+  <div class="container p-4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ c.fullname }}</mat-card-title>
+        <mat-card-subtitle>ID: {{ c.id }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content class="mt-4">
+        <p><strong>Teléfono:</strong> {{ c.phoneNumber }}</p>
+
+        <h3>Pedidos ({{ c.orders.length }})</h3>
+        
+        <div class="orders-list">
+          @for (order of c.orders; track order.id) {
+            <div class="order-item border p-2 my-2 rounded">
+              <p>Pedido ID: {{ order.id }}</p>
+              </div>
+          } @empty {
+            <p>Este cliente no tiene pedidos registrados.</p>
+          }
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+} @else {
+  <p class="p-4">Cargando datos del cliente...</p>
+}

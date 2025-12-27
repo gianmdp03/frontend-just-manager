@@ -8,8 +8,8 @@ import { ProductService } from '../../../services/product-service';
 import { LocationService } from '../../../services/location-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelect, MatOption } from '@angular/material/select';
-import { ProductDetail } from '../../../models/product/product-detail';
-import { LocationDetail } from '../../../models/location/location-detail';
+import { ProductDet } from '../../../models/product/product-del';
+import { LocationDet } from '../../../models/location/location-det';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
@@ -36,8 +36,8 @@ export class InventoryItemForm implements OnInit {
   isEditMode:boolean = false;
   inventoryItemId:string | null = null;
   date = new Date();
-  products: ProductDetail[] = [];
-  locations: LocationDetail[] = [];
+  products: ProductDet[] = [];
+  locations: LocationDet[] = [];
   formGroup: FormGroup;
   constructor() {
     this.formGroup = this.fb.group({

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { OrderService } from '../../../services/order-service';
-import { OrderDetail } from '../../../models/order/order-detail';
+import { OrderDet } from '../../../models/order/order-det';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
@@ -19,7 +19,7 @@ export class OrderList implements OnInit{
   pageSize = 18;
 
   orderService = inject(OrderService);
-  orders:OrderDetail[]=[];
+  orders:OrderDet[]=[];
 
   ngOnInit(): void {
     this.getOrders();
