@@ -21,7 +21,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label> Fecha de vencimiento </mat-label>
-    <input matInput [matDatepicker]="picker" [min]="date" />
+    <input matInput [matDatepicker]="picker" [min]="date" formControlName="expireDate"/>
     <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>

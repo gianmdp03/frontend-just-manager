@@ -95,7 +95,7 @@ export class OrderForm implements OnInit{
   }
 
   setSelectedCustomer(){
-    this.selectedCustomer = this.customerFormGroup.value;
+    this.selectedCustomer = this.customerFormGroup.value.customerId;
     console.log(this.selectedCustomer);
   }
   isEmpty(){

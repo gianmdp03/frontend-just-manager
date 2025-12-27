@@ -5,10 +5,11 @@ import { OrderService } from '../../../services/order-service';
 import { OrderDetail } from '../../../models/order/order-detail';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-order-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, DatePipe],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })

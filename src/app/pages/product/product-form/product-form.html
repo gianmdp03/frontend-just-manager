@@ -1,1 +1,15 @@
-<p>product-form works!</p>
+<form [formGroup]="formGroup" (submit)="onSubmit()" class="flex flex-col">
+    <mat-form-field>
+        <mat-label>
+            Nombre
+        </mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            URL de la imagen
+        </mat-label>
+        <input type="text" matInput formControlName="imageUrl">
+    </mat-form-field>
+    <button type="submit" [disabled]="formGroup.invalid" matButton="filled">Guardar</button>
+</form>

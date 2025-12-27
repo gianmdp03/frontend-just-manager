@@ -2,12 +2,12 @@
   @for (inventoryItem of inventoryItems; track inventoryItem.id) {
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title>{{ inventoryItem.product.name }}</mat-card-title>
-      <mat-card-subtitle>{{ inventoryItem.stock }}</mat-card-subtitle>
+      <mat-card-title>Producto: {{ inventoryItem.product.name }}</mat-card-title>
+      <mat-card-subtitle>Stock: {{ inventoryItem.stock }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>{{ inventoryItem.expireDate }}</p>
-        <p>{{ inventoryItem.location.name }}</p>
+        <p>Fecha de vencimiento: {{ inventoryItem.expireDate }}</p>
+        <p>Ubicación: {{ inventoryItem.location.name }}</p>
     </mat-card-content>
     <img mat-card-image [src]="inventoryItem.product.imageUrl" alt="" />
     <mat-card-actions>

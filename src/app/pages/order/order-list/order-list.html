@@ -3,11 +3,12 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>{{ order.customer.fullname }}</mat-card-title>
-      <mat-card-subtitle>{{ order.saleDate }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ order.saleDate | date:'short'}}</mat-card-subtitle>
       <mat-card-content>
         @for (orderItem of order.orderItems; track orderItem.id) {
-        <p>{{ orderItem.product }}</p>
-        <p>{{ orderItem.amount }}</p>
+          <p>{{orderItem.product.name}}</p>
+          <p>Cantidad: {{orderItem.amount}}</p>
+          <mat-divider></mat-divider>
         }
       </mat-card-content>
     </mat-card-header>
@@ -21,9 +22,10 @@
 </section>
 
 <mat-paginator
-    [length]="totalElements"              
-    [pageSize]="pageSize"                 
-    [pageIndex]="pageIndex"
-    (page)="changePage($event)"        
-    aria-label="Seleccionar página">
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  (page)="changePage($event)"
+  aria-label="Seleccionar página"
+>
 </mat-paginator>
