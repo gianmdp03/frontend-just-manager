@@ -16,7 +16,7 @@ export class CustomerService {
   }
 
   getCustomer(id: string) {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/id/${id}`;
     return this.http.get<any>(url);
   }
 
