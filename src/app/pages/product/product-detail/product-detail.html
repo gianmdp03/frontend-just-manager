@@ -1,1 +1,40 @@
-<p>product-detail works!</p>
+@if (product(); as p) {
+  <div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>inventory_2</mat-icon>
+        <mat-card-title>{{ p.name }}</mat-card-title>
+        <mat-card-subtitle>ID: {{ p.id }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      @if (p.imageUrl) {
+        <img mat-card-image [src]="p.imageUrl" [alt]="p.name">
+      }
+
+      <mat-card-content>
+        <h3>Historial de Ventas</h3>
+        @if (p.orders.length > 0) {
+          <mat-list>
+            @for (order of p.orders; track order.id) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>receipt</mat-icon>
+                <span matListItemTitle>Orden #{{ order.id }}</span>
+                <span matListItemLine>
+                  {{ order.saleDate | date:'short' }} - Cliente: {{ order.customer.fullname }}
+                </span>
+                <a mat-icon-button [routerLink]="['/orders', order.id]">
+                  <mat-icon>visibility</mat-icon>
+                </a>
+              </mat-list-item>
+            }
+          </mat-list>
+        } @else {
+          <p>Este producto no ha sido vendido aún.</p>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/products">Volver a la lista</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}

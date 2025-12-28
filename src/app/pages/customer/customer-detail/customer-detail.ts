@@ -1,37 +1,33 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from '../../../services/order-service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CustomerService } from '../../../services/customer-service';
-import { MatCardModule } from '@angular/material/card';
 import { CustomerDet } from '../../../models/customer/customer-det';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-customer-detail',
-  imports: [MatCardModule],
+  standalone: true,
+  imports: [MatCardModule, MatListModule, MatIconModule, MatButtonModule, RouterLink, DatePipe, MatExpansionModule],
   templateUrl: './customer-detail.html',
   styleUrl: './customer-detail.css',
 })
-export class CustomerDetail implements OnInit{
-  private router = inject(Router);
+export class CustomerDetail implements OnInit {
   private route = inject(ActivatedRoute);
-  customer = signal<CustomerDet|null>(null);
-  orderService = inject(OrderService);
-  customerService = inject(CustomerService);
+  private customerService = inject(CustomerService);
+  
+  customer = signal<CustomerDet | null>(null);
 
   ngOnInit(): void {
-    this.getCustomerById();
-  }
-
-  getCustomerById(){
-    const id = this.route.snapshot.paramMap.get("id");
-    if(id){
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.customerService.getCustomer(id).subscribe({
-        next:(data)=>{
-          this.customer.set(data);
-        },
-        error:(error)=>{
-          console.log(error);
-        }
+        next: (data) => this.customer.set(data),
+        error: (error) => console.error(error)
       });
     }
   }

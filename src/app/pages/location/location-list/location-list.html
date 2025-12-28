@@ -5,7 +5,7 @@
       <mat-card-title>{{ location.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <a matButton>Ver detalle</a>
+      <a matButton [routerLink]='["/locations", location.id]'>Ver detalle</a>
       <a matButton [routerLink]='["/locations/edit", location.id]'>Editar</a>
       <button matButton (click)="deleteLocation(location.id)">Eliminar</button>
     </mat-card-actions>

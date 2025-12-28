@@ -1,1 +1,33 @@
-<p>location-detail works!</p>
+@if (location(); as l) {
+  <div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>location_on</mat-icon>
+        <mat-card-title>{{ l.name }}</mat-card-title>
+        <mat-card-subtitle>Ubicación de Almacenamiento</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h3>Inventario en esta Ubicación</h3>
+        @if (l.inventoryItems.length > 0) {
+          <mat-list>
+            @for (item of l.inventoryItems; track item.id) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>category</mat-icon>
+                <span matListItemTitle>{{ item.product.name }}</span>
+                <span matListItemLine>Stock: {{ item.stock }} | Vence: {{ item.expireDate | date }}</span>
+                <a mat-icon-button [routerLink]="['/inventory-items', item.id]">
+                  <mat-icon>info</mat-icon>
+                </a>
+              </mat-list-item>
+            }
+          </mat-list>
+        } @else {
+          <p>No hay items almacenados en esta ubicación.</p>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/locations">Volver a la lista</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}

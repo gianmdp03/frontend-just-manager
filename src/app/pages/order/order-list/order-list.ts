@@ -6,10 +6,11 @@ import { OrderDet } from '../../../models/order/order-det';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-order-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, DatePipe],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, DatePipe, RouterLink],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })

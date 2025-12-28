@@ -1,1 +1,39 @@
-<p>order-detail works!</p>
+@if (order(); as o) {
+  <div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>receipt</mat-icon>
+        <mat-card-title>Orden #{{ o.id }}</mat-card-title>
+        <mat-card-subtitle>{{ o.saleDate | date:'fullDate' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="customer-info">
+          <h4>Cliente</h4>
+          <p>
+            <a [routerLink]="['/customers', o.customer.id]">
+              {{ o.customer.fullname }}
+            </a> 
+            - {{ o.customer.phoneNumber }}
+          </p>
+        </div>
+
+        <h4>Items de la Orden</h4>
+        <mat-list>
+          @for (item of o.orderItems; track item.id) {
+            <mat-list-item>
+              <mat-icon matListItemIcon>shopping_bag</mat-icon>
+              <span matListItemTitle>{{ item.product.name }}</span>
+              <span matListItemLine>Cantidad: {{ item.amount }}</span>
+              <a mat-icon-button [routerLink]="['/products', item.product.id]">
+                <mat-icon>info</mat-icon>
+              </a>
+            </mat-list-item>
+          }
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/orders">Volver a la lista</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}

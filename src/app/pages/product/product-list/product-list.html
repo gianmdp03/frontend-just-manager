@@ -6,7 +6,7 @@
     </mat-card-header>
     <img mat-card-image [src]="product.imageUrl" alt="" />
     <mat-card-actions>
-      <a matButton>Ver detalle</a>
+      <a matButton [routerLink]='["/products", product.id]'>Ver detalle</a>
       <a matButton [routerLink]='["/products/edit", product.id]'>Editar</a>
       <button matButton (click)="deleteProduct(product.id)">Eliminar</button>
     </mat-card-actions>

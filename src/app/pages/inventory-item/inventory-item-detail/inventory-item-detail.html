@@ -1,1 +1,45 @@
-<p>inventory-item-detail works!</p>
+@if (inventoryItem(); as item) {
+  <div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>shelves</mat-icon>
+        <mat-card-title>Item de Inventario #{{ item.id }}</mat-card-title>
+        <mat-card-subtitle>Estado del Stock</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>inventory_2</mat-icon>
+            <span matListItemTitle>Producto</span>
+            <span matListItemLine>
+              <a [routerLink]="['/products', item.product.id]">{{ item.product.name }}</a>
+            </span>
+          </mat-list-item>
+          
+          <mat-list-item>
+            <mat-icon matListItemIcon>location_on</mat-icon>
+            <span matListItemTitle>Ubicación</span>
+            <span matListItemLine>
+              <a [routerLink]="['/locations', item.location.id]">{{ item.location.name }}</a>
+            </span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>onetwothree</mat-icon>
+            <span matListItemTitle>Cantidad en Stock</span>
+            <span matListItemLine>{{ item.stock }} unidades</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>event_busy</mat-icon>
+            <span matListItemTitle>Fecha de Vencimiento</span>
+            <span matListItemLine>{{ item.expireDate | date:'fullDate' }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/inventory-items">Volver a la lista</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}
