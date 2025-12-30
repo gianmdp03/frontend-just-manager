@@ -46,6 +46,7 @@ export class LocationList implements OnInit {
       if (input.trim() === '') {
         this.getLocations();
       } else {
+        this.pageIndex.set(0);
         this.searchLocation(input);
       }
     }, 300);
@@ -53,7 +54,15 @@ export class LocationList implements OnInit {
 
   searchLocation(input: string) {
     this.locationService.searchLocation(input).subscribe({
-      next: (data) => this.locations.set(data.content),
+      next: (data) => {
+        this.locations.set(data.content);
+        if(data.page){
+          this.totalElements.set(data.page.totalElements);
+        }
+        else{
+          this.totalElements.set(data.content.lenght);
+        }
+      },
       error: (error) => console.log(error),
     });
   }

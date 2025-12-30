@@ -44,6 +44,7 @@ export class CustomerList implements OnInit {
       if (input.trim() === '') {
         this.getCustomers();
       } else {
+        this.pageIndex.set(0);
         this.searchCustomers(input);
       }
     }, 300);
@@ -53,6 +54,12 @@ export class CustomerList implements OnInit {
     this.customerService.searchCustomers(input).subscribe({
       next: (data) => {
         this.customers.set(data.content);
+        if(data.page){
+          this.totalElements.set(data.page.totalElements);
+        }
+        else{
+          this.totalElements.set(data.content.lenght);
+        }
       },
       error: (error) => console.log(error),
     });

@@ -46,6 +46,7 @@ export class ProductList implements OnInit {
       if (input.trim() === '') {
         this.getProducts();
       } else {
+        this.pageIndex.set(0);
         this.searchProducts(input);
       }
     }, 300);
@@ -53,7 +54,15 @@ export class ProductList implements OnInit {
 
   searchProducts(input: string) {
     this.productService.searchProduct(input).subscribe({
-      next: (data) => this.products.set(data.content),
+      next: (data) => {
+        this.products.set(data.content);
+        if(data.page){
+          this.totalElements.set(data.page.totalElements);
+        }
+        else{
+          this.totalElements.set(data.content.lenght);
+        }
+      },
       error: (error) => console.log(error),
     });
   }
