@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NavItem } from '../../models/nav-item';
 import { Navbar } from '../navbar/navbar';
 import { RouterOutlet } from '@angular/router';
+import { Dashboard } from "../dashboard/dashboard";
 
 @Component({
   selector: 'app-home-layout',
-  imports: [Navbar, RouterOutlet],
+  imports: [Navbar, RouterOutlet, Dashboard],
   templateUrl: './home-layout.html',
   styleUrl: './home-layout.css',
 })

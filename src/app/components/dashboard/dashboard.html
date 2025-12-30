@@ -1,1 +1,26 @@
-<p>dashboard works!</p>
+<div class="grid">
+  <mat-card class="hover:-translate-y-2" (click)="navigate(1)">
+    <mat-card-header>
+      <mat-card-title>Productos cargados</mat-card-title>
+    </mat-card-header>
+    <h2>{{ productNumber() }}</h2>
+  </mat-card>
+  <mat-card class="hover:-translate-y-2" (click)="navigate(2)">
+    <mat-card-header>
+      <mat-card-title>Ítems de inventario cargados</mat-card-title>
+    </mat-card-header>
+    <h2>{{ inventoryItemNumber() }}</h2></mat-card
+  >
+  <mat-card class="hover:-translate-y-2" (click)="navigate(3)">
+    <mat-card-header>
+      <mat-card-title>Clientes cargados</mat-card-title>
+    </mat-card-header>
+    <h2>{{ customerNumber() }}</h2></mat-card
+  >
+  <mat-card class="hover:-translate-y-2" (click)="navigate(4)">
+    <mat-card-header>
+      <mat-card-title>Ventas cargadas</mat-card-title>
+    </mat-card-header>
+    <h2>{{ orderNumber() }}</h2></mat-card
+  >
+</div>
