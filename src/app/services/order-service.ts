@@ -26,8 +26,8 @@ export class OrderService {
     return this.http.get<any>(url);
   }
 
-  postOrder(data: OrderItemRequest[], customerId:string){
-    const url = `${this.apiUrl}/${customerId}`;
+  postOrder(date:string, data: OrderItemRequest[], customerId:string){
+    const url = `${this.apiUrl}/${date}/${customerId}`;
     return this.http.post<any>(url, data);
   }
 

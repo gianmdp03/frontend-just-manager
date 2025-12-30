@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavItem } from '../../models/nav-item';
 import { Navbar } from '../navbar/navbar';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-order-layout',
-  imports: [Navbar, RouterLink, RouterOutlet],
+  imports: [Navbar, RouterOutlet],
   templateUrl: './order-layout.html',
   styleUrl: './order-layout.css',
 })

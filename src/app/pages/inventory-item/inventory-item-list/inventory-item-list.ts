@@ -76,7 +76,7 @@ export class InventoryItemList implements OnInit {
     } else if (event.value == 3) {
       this.locationSearch.set(false);
       this.productSearch.set(false);
-      this.getAlmostExpiredInventoryItems("10");
+      this.getAlmostExpiredInventoryItems("90");
 
     } else if (event.value == 4) {
       this.locationSearch.set(false);

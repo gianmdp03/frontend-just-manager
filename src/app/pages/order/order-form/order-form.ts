@@ -1,16 +1,17 @@
+import { formatDate } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from "@angular/material/select";
 import { Router } from '@angular/router';
+import { CustomerDet } from '../../../models/customer/customer-det';
+import { OrderItemRequest } from '../../../models/order/order-item-request';
+import { ProductDet } from '../../../models/product/product-del';
+import { CustomerService } from '../../../services/customer-service';
 import { OrderService } from '../../../services/order-service';
 import { ProductService } from '../../../services/product-service';
-import { ProductDet } from '../../../models/product/product-del';
-import { OrderItemRequest } from '../../../models/order/order-item-request';
-import { CustomerService } from '../../../services/customer-service';
-import { CustomerDet } from '../../../models/customer/customer-det';
-import { MatSelectModule } from "@angular/material/select";
 
 @Component({
   selector: 'app-order-form',
@@ -70,6 +71,12 @@ export class OrderForm implements OnInit{
     });
   }
 
+  getDate():string{
+    const date = new Date();
+    const springDate = formatDate(date, 'yyyy-MM-ddTHH:mm:ss', 'en-US');
+    return springDate;
+  }
+
   getCustomers(){
     this.customerService.getCustomers(0, 1000).subscribe({
       next:(data)=>{
@@ -91,7 +98,7 @@ export class OrderForm implements OnInit{
   }
 
   postOrderItems(){
-    this.orderService.postOrder(this.orderItemsToBeAdded(), this.selectedCustomer()).subscribe({
+    this.orderService.postOrder(this.getDate(), this.orderItemsToBeAdded(), this.selectedCustomer()).subscribe({
       next:()=>{
         alert("Venta creada correctamente");
         this.router.navigate(["/orders"]);

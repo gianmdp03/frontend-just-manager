@@ -1,4 +1,4 @@
 export interface ProductRequest {
     name:string;
-    imageUrl?:string;
+    imageUrl:string;
 }
