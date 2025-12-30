@@ -9,11 +9,12 @@ export class InventoryItemService {
   protected apiUrl = "http://localhost:8080/api/inventory-items";
   http = inject(HttpClient);
 
-  getInventoryItems(page:number, size:number){
+  getInventoryItems(date:string, page:number, size:number){
+    const url = `${this.apiUrl}/${date}`;
     let params = new HttpParams()
     .set("page", page.toString())
     .set("size", size.toString())
-    return this.http.get<any>(this.apiUrl, {params});
+    return this.http.get<any>(url, {params});
   }
 
   getInventoryItem(id: string) {
@@ -21,18 +22,23 @@ export class InventoryItemService {
     return this.http.get<any>(url);
   }
 
-  getExpiredInventoryItems(){
-    const url = `${this.apiUrl}/expired`;
+  getExpiringSoonInventoryItems(date:string, days:string){
+    const url = `${this.apiUrl}/${date}/almost/${days}`;
     return this.http.get<any>(url);
   }
 
-  getInventoryItemsByProduct(id:string){
-    const url = `${this.apiUrl}/product/${id}`;
+  getExpiredInventoryItems(date:string){
+    const url = `${this.apiUrl}/${date}/expired`;
     return this.http.get<any>(url);
   }
 
-  getInventoryItemsByLocation(id:string){
-    const url = `${this.apiUrl}/location/${id}`;
+  getInventoryItemsByProduct(date:string, id:string){
+    const url = `${this.apiUrl}/${date}/product/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  getInventoryItemsByLocation(date:string, id:string){
+    const url = `${this.apiUrl}/${date}/location/${id}`;
     return this.http.get<any>(url);
   }
 

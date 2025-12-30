@@ -2,7 +2,8 @@
   <mat-radio-group (change)="handleRadio($event)">
     <mat-radio-button value="1">Producto</mat-radio-button>
     <mat-radio-button value="2">Ubicación</mat-radio-button>
-    <mat-radio-button value="3">Vencidos</mat-radio-button>
+    <mat-radio-button value="3">Por vencer</mat-radio-button>
+    <mat-radio-button value="4">Vencidos</mat-radio-button>
   </mat-radio-group>
   @if (productSearch()) {
   <mat-form-field appearance="outline" subscriptSizing="dynamic">

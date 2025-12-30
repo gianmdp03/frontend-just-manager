@@ -12,6 +12,7 @@ import { LocationDet } from '../../../models/location/location-det';
 import { ProductService } from '../../../services/product-service';
 import { LocationService } from '../../../services/location-service';
 import { MatSelectModule } from '@angular/material/select';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-inventory-item-list',
@@ -50,7 +51,7 @@ export class InventoryItemList implements OnInit {
   }
 
   getInventoryItems() {
-    this.inventoryItemService.getInventoryItems(this.pageIndex(), this.pageSize()).subscribe({
+    this.inventoryItemService.getInventoryItems(this.getDate(), this.pageIndex(), this.pageSize()).subscribe({
       next: (data) => {
         this.inventoryItems.set(data.content);
         this.totalElements.set(data.totalElements);
@@ -75,6 +76,11 @@ export class InventoryItemList implements OnInit {
     } else if (event.value == 3) {
       this.locationSearch.set(false);
       this.productSearch.set(false);
+      this.getAlmostExpiredInventoryItems("10");
+
+    } else if (event.value == 4) {
+      this.locationSearch.set(false);
+      this.productSearch.set(false);
       this.getExpiredInventoryItems();
     }
   }
@@ -94,21 +100,28 @@ export class InventoryItemList implements OnInit {
   }
 
   getInventoryItemsByProduct(id: string) {
-    this.inventoryItemService.getInventoryItemsByProduct(id).subscribe({
+    this.inventoryItemService.getInventoryItemsByProduct(this.getDate(), id).subscribe({
       next: (data) => this.inventoryItems.set(data.content),
       error: (error) => console.log(error),
     });
   }
 
   getInventoryItemsByLocation(id: string) {
-    this.inventoryItemService.getInventoryItemsByLocation(id).subscribe({
+    this.inventoryItemService.getInventoryItemsByLocation(this.getDate(), id).subscribe({
       next: (data) => this.inventoryItems.set(data.content),
       error: (error) => console.log(error),
     });
   }
 
+  getAlmostExpiredInventoryItems(days:string){
+    this.inventoryItemService.getExpiringSoonInventoryItems(this.getDate(), days).subscribe({
+      next:(data)=>this.inventoryItems.set(data.content),
+      error:(error)=>console.log(error)
+    });
+  }
+
   getExpiredInventoryItems() {
-    this.inventoryItemService.getExpiredInventoryItems().subscribe({
+    this.inventoryItemService.getExpiredInventoryItems(this.getDate()).subscribe({
       next: (data) => this.inventoryItems.set(data.content),
       error: (error) => console.log(error),
     });
@@ -126,6 +139,12 @@ export class InventoryItemList implements OnInit {
         },
       });
     }
+  }
+
+  getDate():string{
+    const date = new Date;
+    const springDate = formatDate(date, 'yyyy-MM-dd', 'en-US');
+    return springDate;
   }
 
   changePage(event: PageEvent) {
