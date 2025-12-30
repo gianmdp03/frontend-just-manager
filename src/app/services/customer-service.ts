@@ -20,6 +20,11 @@ export class CustomerService {
     return this.http.get<any>(url);
   }
 
+  searchCustomers(name:string){
+    const url = `${this.apiUrl}/${name}`;
+    return this.http.get<any>(url);
+  }
+
   postCustomers(data: CustomerRequest) {
     return this.http.post<any>(this.apiUrl, data);
   }

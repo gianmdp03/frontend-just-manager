@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatCardModule } from "@angular/material/card";
 import { InventoryItemService } from '../../../services/inventory-item-service';
 import { InventoryItemDet } from '../../../models/inventory-item/inventory-item-det';
@@ -14,22 +14,22 @@ import { RouterLink } from "@angular/router";
   styleUrl: './inventory-item-list.css',
 })
 export class InventoryItemList implements OnInit{
-  totalElements = 0;
-  pageIndex = 0;
-  pageSize = 18;
+  totalElements = signal<number>(0);
+  pageIndex = signal<number>(0);
+  pageSize = signal<number>(18);
 
   inventoryItemService = inject(InventoryItemService);
-  inventoryItems: InventoryItemDet[] = [];
+  inventoryItems = signal<InventoryItemDet[]>([]);
 
   ngOnInit(): void {
     this.getInventoryItems();
   }
 
   getInventoryItems(){
-    this.inventoryItemService.getInventoryItems(this.pageIndex, this.pageSize).subscribe({
+    this.inventoryItemService.getInventoryItems(this.pageIndex(), this.pageSize()).subscribe({
       next: (data) => {
-        this.inventoryItems = data.content;
-        this.totalElements = data.totalElements;
+        this.inventoryItems.set(data.content);
+        this.totalElements.set(data.totalElements);
       },
       error: (error) => {
         console.log(error);
@@ -42,19 +42,19 @@ export class InventoryItemList implements OnInit{
       this.inventoryItemService.deleteInventoryItem(id).subscribe({
         next:()=>{
           alert("Ítem de inventario eliminado");
-          this.inventoryItems = this.inventoryItems.filter(p => p.id !== id);
+          this.inventoryItems.update(inventoryItems => inventoryItems.filter(p => p.id !== id));
         },
         error:(error)=>{
           alert("Error al eliminar");
           
         }
-      })
+      });
     }
   }
 
   changePage(event: PageEvent){
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
     this.getInventoryItems();
   }
 }

@@ -4,7 +4,7 @@
             Cliente
         </mat-label>
         <mat-select formControlName="customerId">
-        @for (customer of customers; track customer.id) {
+        @for (customer of customers(); track customer.id) {
             <mat-option [value]="customer.id">{{customer.fullname}}</mat-option>
         }
         </mat-select>
@@ -21,7 +21,7 @@
             Producto
         </mat-label>
         <mat-select formControlName="productId">
-            @for (product of products; track product.id) {
+            @for (product of products(); track product.id) {
                 <mat-option [value]="product.id">{{product.name}}</mat-option>
             }
         </mat-select>

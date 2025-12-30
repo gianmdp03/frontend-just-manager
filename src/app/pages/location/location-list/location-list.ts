@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { LocationService } from '../../../services/location-service';
@@ -14,22 +14,22 @@ import { RouterLink } from "@angular/router";
   styleUrl: './location-list.css',
 })
 export class LocationList implements OnInit{
-  totalElements = 0;
-  pageIndex = 0;
-  pageSize = 18;
+  totalElements = signal<number>(0);
+  pageIndex = signal<number>(0);
+  pageSize = signal<number>(18);
 
   locationService = inject(LocationService);
-  locations:LocationDet[]=[];
+  locations=signal<LocationDet[]>([]);
 
   ngOnInit(): void {
     this.getLocations();
   }
 
   getLocations(){
-    return this.locationService.getLocations(this.pageIndex, this.pageSize).subscribe({
+    return this.locationService.getLocations(this.pageIndex(), this.pageSize()).subscribe({
       next:(data)=>{
-        this.locations = data.content;
-        this.totalElements = data.totalElements;
+        this.locations.set(data.content);
+        this.totalElements.set(data.totalElements);
       },
       error:(error)=>{
         console.log(error);
@@ -42,7 +42,7 @@ export class LocationList implements OnInit{
       this.locationService.deleteLocation(id).subscribe({
         next: ()=> {
           alert("Ubicación eliminada correctamente");
-          this.locations = this.locations.filter(p => p.id !== id);
+          this.locations.update(locations => locations.filter(p => p.id !== id));
         },
         error:(error)=>{
           alert("Error al eliminar");
@@ -53,8 +53,8 @@ export class LocationList implements OnInit{
   }
 
   changePage(event: PageEvent){
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
     this.getLocations();
   }
 }

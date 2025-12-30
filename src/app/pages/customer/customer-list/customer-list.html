@@ -1,5 +1,9 @@
+<div id="search">
+  <input type="text" #txtSearch placeholder="Buscar clientes" (input)="onSearch(txtSearch.value)">
+</div>
+
 <section>
-  @for (customer of customers; track customer.id) {
+  @for (customer of customers(); track customer.id) {
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>{{customer.fullname}}</mat-card-title>
@@ -15,9 +19,9 @@
 </section>
 
 <mat-paginator
-    [length]="totalElements"              
-    [pageSize]="pageSize"                 
-    [pageIndex]="pageIndex"
+    [length]="totalElements()"              
+    [pageSize]="pageSize()"                 
+    [pageIndex]="pageIndex()"
     (page)="changePage($event)"        
     aria-label="Seleccionar página">
 </mat-paginator>

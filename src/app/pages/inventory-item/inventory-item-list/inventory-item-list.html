@@ -1,5 +1,5 @@
 <section>
-  @for (inventoryItem of inventoryItems; track inventoryItem.id) {
+  @for (inventoryItem of inventoryItems(); track inventoryItem.id) {
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>Producto: {{ inventoryItem.product.name }}</mat-card-title>
@@ -20,9 +20,9 @@
 </section>
 
 <mat-paginator
-    [length]="totalElements"              
-    [pageSize]="pageSize"                 
-    [pageIndex]="pageIndex"
+    [length]="totalElements()"              
+    [pageSize]="pageSize()"                 
+    [pageIndex]="pageIndex()"
     (page)="changePage($event)"        
     aria-label="Seleccionar página">
 </mat-paginator>

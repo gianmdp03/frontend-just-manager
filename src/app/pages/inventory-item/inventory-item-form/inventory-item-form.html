@@ -1,9 +1,9 @@
 <form [formGroup]="formGroup" (submit)="onSubmit()" class="flex flex-col">
-  @if (!isEditMode) {
+  @if (!isEditMode()) {
     <mat-form-field>
     <mat-label> Producto </mat-label>
     <mat-select formControlName="productId">
-      @for (product of products; track product.id) {
+      @for (product of products(); track product.id) {
       <mat-option [value]="product.id">{{ product.name }}</mat-option>
       }
     </mat-select>
@@ -15,7 +15,7 @@
   <mat-form-field>
   <mat-label> Ubicación </mat-label>
   <mat-select formControlName="locationId">
-    @for (location of locations; track location.id) {
+    @for (location of locations(); track location.id) {
     <mat-option [value]="location.id">{{ location.name }}</mat-option>
     }
   </mat-select>
@@ -32,7 +32,7 @@
     }
   </mat-form-field>
 
-    @if (!isEditMode) {
+    @if (!isEditMode()) {
   <mat-form-field>
     <mat-label> Fecha de vencimiento </mat-label>
     <input matInput [matDatepicker]="picker" [min]="date" formControlName="expireDate"/>

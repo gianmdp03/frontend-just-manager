@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,10 +27,10 @@ export class OrderForm implements OnInit{
   private customerFb = inject(FormBuilder);
   formGroup:FormGroup;
   customerFormGroup:FormGroup;
-  customers:CustomerDet[] = [];
-  products:ProductDet[] = [];
-  orderItemsToBeAdded:OrderItemRequest[] = [];
-  selectedCustomer:string = "";
+  customers = signal<CustomerDet[]>([]);
+  products = signal<ProductDet[]>([]);
+  orderItemsToBeAdded = signal<OrderItemRequest[]>([]);
+  selectedCustomer= signal<string>("");
 
   constructor(){
     this.formGroup = this.fb.group({
@@ -62,7 +62,7 @@ export class OrderForm implements OnInit{
   getProducts(){
     this.productService.getProducts(0, 1000).subscribe({
       next:(data)=>{
-        this.products = data.content;
+        this.products.set(data.content);
       },
       error:(error)=>{
         console.log(error);
@@ -73,7 +73,7 @@ export class OrderForm implements OnInit{
   getCustomers(){
     this.customerService.getCustomers(0, 1000).subscribe({
       next:(data)=>{
-        this.customers = data.content;
+        this.customers.set(data.content);
       },
       error:(error)=>{
         console.log(error);
@@ -87,11 +87,11 @@ export class OrderForm implements OnInit{
     if(this.formGroup.invalid){
       return;
     }
-    this.orderItemsToBeAdded.push(this.formGroup.value);
+    this.orderItemsToBeAdded.update(orderItems => [...orderItems, this.formGroup.value]);
   }
 
   postOrderItems(){
-    this.orderService.postOrder(this.orderItemsToBeAdded, this.selectedCustomer).subscribe({
+    this.orderService.postOrder(this.orderItemsToBeAdded(), this.selectedCustomer()).subscribe({
       next:()=>{
         alert("Venta creada correctamente");
         this.router.navigate(["/orders"]);
@@ -103,15 +103,14 @@ export class OrderForm implements OnInit{
   }
 
   popOrderItem(){
-    this.orderItemsToBeAdded.pop();
+    this.orderItemsToBeAdded.update(orderItems => orderItems.slice(0, -1));
   }
 
   setSelectedCustomer(){
-    this.selectedCustomer = this.customerFormGroup.value.customerId;
-    console.log(this.selectedCustomer);
+    this.selectedCustomer.set(this.customerFormGroup.value.customerId);
   }
   isEmpty(){
-    if(this.orderItemsToBeAdded.length === 0){
+    if(this.orderItemsToBeAdded().length === 0){
       return true;
     }
     return false;

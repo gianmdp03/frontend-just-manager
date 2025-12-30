@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,8 +18,7 @@ export class ProductForm implements OnInit{
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   formGroup: FormGroup;
-  isEditMode:boolean = false;
-  productId:string | null = null;
+  productId = signal<string>("");
 
   constructor() {
     this.formGroup = this.fb.group({
@@ -31,8 +30,7 @@ export class ProductForm implements OnInit{
   ngOnInit(): void {
    const id = this.route.snapshot.paramMap.get("id");
    if(id){
-    this.isEditMode = true;
-    this.productId = id;
+    this.productId.set(id);
     this.productService.getProduct(id).subscribe({
       next:(data)=>{
         this.formGroup.patchValue(data);
@@ -57,8 +55,8 @@ export class ProductForm implements OnInit{
     if (this.formGroup.invalid) {
       return;
     }
-    if(this.isEditMode && this.productId){
-      this.productService.patchProduct(this.productId, this.formGroup.value).subscribe({
+    if(this.productId().trim() !== ""){
+      this.productService.patchProduct(this.productId(), this.formGroup.value).subscribe({
         next:()=>{
           alert("Producto editado correctamente");
           this.router.navigate(["/products"]);

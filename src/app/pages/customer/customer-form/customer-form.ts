@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../../services/customer-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,8 +17,8 @@ export class CustomerForm implements OnInit {
   private customerService = inject(CustomerService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  customerId: string | null = null;
-  isEditMode: boolean = false;
+  customerId = signal<string>("");
+  isEditMode = signal<boolean>(false);
   customerForm: FormGroup;
   constructor() {
     this.customerForm = this.fb.group({
@@ -29,8 +29,8 @@ export class CustomerForm implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.customerId = id;
-      this.isEditMode = true;
+      this.customerId.set(id);
+      this.isEditMode.set(true);
       this.customerService.getCustomer(id).subscribe({
         next: (customer) => {
           this.customerForm.patchValue(customer);
@@ -54,8 +54,8 @@ export class CustomerForm implements OnInit {
     if (this.customerForm.invalid) {
       return;
     }
-    if (this.isEditMode && this.customerId) {
-      this.customerService.patchCustomer(this.customerId, this.customerForm.value).subscribe({
+    if (this.isEditMode() && this.customerId().trim() !== "") {
+      this.customerService.patchCustomer(this.customerId(), this.customerForm.value).subscribe({
         next: () => {
           alert('Cliente editado correctamente');
           this.router.navigate(['/customers']);

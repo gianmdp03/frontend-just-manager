@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,7 +17,7 @@ export class LocationForm implements OnInit{
   private locationService = inject(LocationService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  locationId:string | null = null;
+  locationId = signal<string>("");
   formGroup: FormGroup;
 
   constructor() {
@@ -29,35 +29,35 @@ export class LocationForm implements OnInit{
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if(id){
-      this.locationId = id;
+      this.locationId.set(id);
       this.locationService.getLocation(id).subscribe({
         next:(data)=>{
           this.formGroup.patchValue(data);
         },
         error:(error)=>{
           console.log(error);
-          
         }
       });
     }
   }
+
   get name() {
     return this.formGroup.get('name');
   }
+
   onSubmit() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.invalid) {
       return;
     }
-    if(this.locationId){
-      this.locationService.patchLocation(this.locationId, this.formGroup.value).subscribe({
+    if(this.locationId().trim() === ""){
+      this.locationService.patchLocation(this.locationId(), this.formGroup.value).subscribe({
         next:()=>{
           alert("Ubicación editada correctamente");
           this.router.navigate(["/locations"]);
         },
         error:(error)=>{
           console.log(error);
-          
         }
       });
     }

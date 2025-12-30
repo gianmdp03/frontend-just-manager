@@ -1,20 +1,26 @@
 <section>
-  @for (order of orders; track order.id) {
+  @for (order of orders(); track order.id) {
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ order.customer.fullname }}</mat-card-title>
-      <mat-card-subtitle>{{ order.saleDate | date:'short'}}</mat-card-subtitle>
-      <mat-card-content>
-        @for (orderItem of order.orderItems; track orderItem.id) {
-          <mat-divider></mat-divider>
-          <p>{{orderItem.product.name}}</p>
-          <p>Cantidad: {{orderItem.amount}}</p>
-          <mat-divider></mat-divider>
-        }
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ order.customer.fullname }}</mat-panel-title>
+            <mat-panel-description>{{ order.saleDate | date : 'short' }}</mat-panel-description>
+          </mat-expansion-panel-header>
+        <mat-card-content>
+            @for (orderItem of order.orderItems; track orderItem.id) {
+            <mat-divider></mat-divider>
+            <p>{{ orderItem.product.name }}</p>
+            <p>Cantidad: {{ orderItem.amount }}</p>
+            <mat-divider></mat-divider>
+            }
       </mat-card-content>
-    </mat-card-header>
+        </mat-expansion-panel>
+      </mat-accordion> 
+      </mat-card-header>
     <mat-card-actions>
-      <a matButton [routerLink]='["/orders", order.id]'>Ver detalle</a>
+      <a matButton [routerLink]="['/orders', order.id]">Ver detalle</a>
       <button matButton (click)="deleteOrder(order.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
@@ -22,9 +28,9 @@
 </section>
 
 <mat-paginator
-  [length]="totalElements"
-  [pageSize]="pageSize"
-  [pageIndex]="pageIndex"
+  [length]="totalElements()"
+  [pageSize]="pageSize()"
+  [pageIndex]="pageIndex()"
   (page)="changePage($event)"
   aria-label="Seleccionar página"
 >

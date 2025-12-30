@@ -1,5 +1,5 @@
 <section>
-  @for (location of locations; track location.id) {
+  @for (location of locations(); track location.id) {
   <mat-card>
     <mat-card-header>
       <mat-card-title>{{ location.name }}</mat-card-title>
@@ -14,9 +14,9 @@
 </section>
 
 <mat-paginator
-    [length]="totalElements"              
-    [pageSize]="pageSize"                 
-    [pageIndex]="pageIndex"
+    [length]="totalElements()"              
+    [pageSize]="pageSize()"                 
+    [pageIndex]="pageIndex()"
     (page)="changePage($event)"        
     aria-label="Seleccionar página">
 </mat-paginator>

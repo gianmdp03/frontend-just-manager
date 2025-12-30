@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,11 +33,11 @@ export class InventoryItemForm implements OnInit {
   private productService = inject(ProductService);
   private locationService = inject(LocationService);
   private route = inject(ActivatedRoute);
-  isEditMode:boolean = false;
-  inventoryItemId:string | null = null;
+  isEditMode = signal<boolean>(false);
+  inventoryItemId = signal<string>("");
   date = new Date();
-  products: ProductDet[] = [];
-  locations: LocationDet[] = [];
+  products = signal<ProductDet[]>([]);
+  locations = signal<LocationDet[]>([]);
   formGroup: FormGroup;
   constructor() {
     this.formGroup = this.fb.group({
@@ -69,8 +69,8 @@ export class InventoryItemForm implements OnInit {
     this.getLocations();
     const id = this.route.snapshot.paramMap.get("id");
     if(id){
-      this.inventoryItemId = id;
-      this.isEditMode = true;
+      this.inventoryItemId.set(id);
+      this.isEditMode.set(true);
       this.productId?.disable();
       this.expireDate?.disable();
       this.inventoryItemService.getInventoryItem(id).subscribe({
@@ -93,8 +93,8 @@ export class InventoryItemForm implements OnInit {
     if (this.formGroup.invalid) {
       return;
     }
-    if(this.inventoryItemId && this.isEditMode){
-      this.inventoryItemService.patchInventoryItem(this.inventoryItemId, this.formGroup.value).subscribe({
+    if(this.inventoryItemId().trim() === "" && this.isEditMode()){
+      this.inventoryItemService.patchInventoryItem(this.inventoryItemId(), this.formGroup.value).subscribe({
         next:()=>{
           alert("Ítem de inventario editado correctamente");
           this.router.navigate(["/inventory-items"]);
@@ -112,7 +112,7 @@ export class InventoryItemForm implements OnInit {
   getProducts() {
     this.productService.getProducts(0, 1000).subscribe({
       next: (data) => {
-        this.products = data.content;
+        this.products.set(data.content);
       },
       error: (error) => {
         console.log(error);
@@ -122,7 +122,7 @@ export class InventoryItemForm implements OnInit {
   getLocations() {
     this.locationService.getLocations(0, 1000).subscribe({
       next: (data) => {
-        this.locations = data.content;
+        this.locations.set(data.content);
       },
       error: (error) => {
         console.log(error);
@@ -131,7 +131,7 @@ export class InventoryItemForm implements OnInit {
   }
   postInventoryItem() {
     this.inventoryItemService.postInventoryItems(this.formGroup.value).subscribe({
-      next: (data) => {
+      next: () => {
         alert('Ítem de inventario creado correctamente');
         this.router.navigate(['/inventory-items']);
       },
