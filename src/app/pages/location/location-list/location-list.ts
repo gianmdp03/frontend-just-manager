@@ -29,7 +29,7 @@ export class LocationList implements OnInit{
     return this.locationService.getLocations(this.pageIndex(), this.pageSize()).subscribe({
       next:(data)=>{
         this.locations.set(data.content);
-        this.totalElements.set(data.totalElements);
+        this.totalElements.set(data.page.totalElements);
       },
       error:(error)=>{
         console.log(error);

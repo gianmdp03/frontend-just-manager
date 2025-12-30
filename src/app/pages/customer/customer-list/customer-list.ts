@@ -18,6 +18,7 @@ export class CustomerList implements OnInit {
   pageSize = signal<number>(18);
   customerService = inject(CustomerService);
   customers = signal<CustomerDet[]>([]);
+  private searchTimer: any;
 
   ngOnInit(): void {
     this.getCustomers();
@@ -27,7 +28,7 @@ export class CustomerList implements OnInit {
     this.customerService.getCustomers(this.pageIndex(), this.pageSize()).subscribe({
       next: (data) => {
         this.customers.set(data.content);
-        this.totalElements.set(data.totalElements);
+        this.totalElements.set(data.page.totalElements);
       },
       error: (error) => {
         console.log(error);
@@ -35,12 +36,17 @@ export class CustomerList implements OnInit {
     });
   }
 
-  onSearch(input:string){
-    if(input.trim() === ""){
-      this.getCustomers();
-    }else{
-      this.searchCustomers(input);
+  onSearch(input: string) {
+    if (this.searchTimer) {
+      clearTimeout(this.searchTimer);
     }
+    this.searchTimer = setTimeout(() => {
+      if (input.trim() === '') {
+        this.getCustomers();
+      } else {
+        this.searchCustomers(input);
+      }
+    }, 300);
   }
 
   searchCustomers(input: string) {

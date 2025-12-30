@@ -29,7 +29,7 @@ export class ProductList implements OnInit{
     this.productService.getProducts(this.pageIndex(), this.pageSize()).subscribe({
       next:(data)=>{
         this.products.set(data.content);
-        this.totalElements.set(data.totalElements);
+        this.totalElements.set(data.page.totalElements);
       },
       error:(error)=>{
         console.log(error);

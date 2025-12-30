@@ -54,7 +54,7 @@ export class InventoryItemList implements OnInit {
     this.inventoryItemService.getInventoryItems(this.getDate(), this.pageIndex(), this.pageSize()).subscribe({
       next: (data) => {
         this.inventoryItems.set(data.content);
-        this.totalElements.set(data.totalElements);
+        this.totalElements.set(data.page.totalElements);
       },
       error: (error) => {
         console.log(error);

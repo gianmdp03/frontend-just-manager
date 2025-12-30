@@ -37,7 +37,7 @@ export class OrderList implements OnInit{
     this.orderService.getOrders(this.pageIndex(), this.pageSize()).subscribe({
       next:(data)=>{
         this.orders.set(data.content);
-        this.totalElements.set(data.totalElements);
+        this.totalElements.set(data.page.totalElements);
       },
       error:(error)=>{
         console.log(error);
