@@ -21,6 +21,11 @@ export class OrderService {
     return this.http.get<any>(url);
   }
 
+  getOrderBySaleDateBetween(startDate:string, endDate:string){
+    const url = `${this.apiUrl}/${startDate}/${endDate}`;
+    return this.http.get<any>(url);
+  }
+
   postOrder(data: OrderItemRequest[], customerId:string){
     const url = `${this.apiUrl}/${customerId}`;
     return this.http.post<any>(url, data);

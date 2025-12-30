@@ -1,3 +1,7 @@
+<mat-card>
+  <input type="text" #txtSearch placeholder="Buscar productos" (input)="searchProducts(txtSearch.value)">
+</mat-card>
+
 <section>
   @for (product of products(); track product.id) {
   <mat-card>

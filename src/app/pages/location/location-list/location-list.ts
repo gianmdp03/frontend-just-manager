@@ -37,6 +37,22 @@ export class LocationList implements OnInit{
     })
   }
 
+  onSearch(input:string){
+    if(input.trim() === ""){
+      this.getLocations();
+    }
+    else{
+      this.searchLocation(input);
+    }
+  }
+
+  searchLocation(input:string){
+    this.locationService.searchLocation(input).subscribe({
+      next: (data) => this.locations.set(data.content),
+      error: (error) => console.log(error)
+    });
+  }
+
   deleteLocation(id:string){
     if(confirm("Eliminar esta ubicación?")){
       this.locationService.deleteLocation(id).subscribe({

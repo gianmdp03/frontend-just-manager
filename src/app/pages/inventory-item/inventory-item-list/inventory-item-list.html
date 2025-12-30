@@ -1,3 +1,34 @@
+<mat-card>
+  <mat-radio-group (change)="handleRadio($event)">
+    <mat-radio-button value="1">Producto</mat-radio-button>
+    <mat-radio-button value="2">Ubicación</mat-radio-button>
+    <mat-radio-button value="3">Vencidos</mat-radio-button>
+  </mat-radio-group>
+  @if (productSearch()) {
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-select (selectionChange)="productId.set($event.value)">
+      @for (product of products(); track product.id) {
+      <mat-option [value]="product.id">{{ product.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <div class="b">
+    <button matButton="filled" (click)="getInventoryItemsByProduct(productId())">Buscar</button>
+  </div>
+  } @if (locationSearch()) {
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-select (selectionChange)="locationId.set($event.value)">
+      @for (location of locations(); track location.id) {
+      <mat-option [value]="location.id">{{ location.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <div class="b">
+    <button matButton="filled" (click)="getInventoryItemsByLocation(locationId())">Buscar</button>
+  </div>
+  }
+</mat-card>
+
 <section>
   @for (inventoryItem of inventoryItems(); track inventoryItem.id) {
   <mat-card appearance="outlined">
@@ -6,13 +37,13 @@
       <mat-card-subtitle>Stock: {{ inventoryItem.stock }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>Fecha de vencimiento: {{ inventoryItem.expireDate }}</p>
-        <p>Ubicación: {{ inventoryItem.location.name }}</p>
+      <p>Fecha de vencimiento: {{ inventoryItem.expireDate }}</p>
+      <p>Ubicación: {{ inventoryItem.location.name }}</p>
     </mat-card-content>
     <img mat-card-image [src]="inventoryItem.product.imageUrl" alt="" />
     <mat-card-actions>
-      <a matButton [routerLink]='["/inventory-items", inventoryItem.id]'>Ver</a>
-      <a matButton [routerLink]='["/inventory-items/edit", inventoryItem.id]'>Editar</a>
+      <a matButton [routerLink]="['/inventory-items', inventoryItem.id]">Ver</a>
+      <a matButton [routerLink]="['/inventory-items/edit', inventoryItem.id]">Editar</a>
       <button matButton (click)="deleteInventoryItem(inventoryItem.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
@@ -20,9 +51,10 @@
 </section>
 
 <mat-paginator
-    [length]="totalElements()"              
-    [pageSize]="pageSize()"                 
-    [pageIndex]="pageIndex()"
-    (page)="changePage($event)"        
-    aria-label="Seleccionar página">
+  [length]="totalElements()"
+  [pageSize]="pageSize()"
+  [pageIndex]="pageIndex()"
+  (page)="changePage($event)"
+  aria-label="Seleccionar página"
+>
 </mat-paginator>

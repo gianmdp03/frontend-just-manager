@@ -37,6 +37,22 @@ export class ProductList implements OnInit{
     })
   }
 
+  onSearch(input: string){
+    if(input.trim() === ""){
+      this.getProducts();
+    }
+    else{
+      this.searchProducts(input);
+    }
+  }
+
+  searchProducts(input: string){
+    this.productService.searchProduct(input).subscribe({
+      next:(data)=>this.products.set(data.content),
+      error:(error)=>console.log(error)
+    });
+  }
+
   deleteProduct(id:string){
     if(confirm("Eliminar este producto?")){
       this.productService.deleteProduct(id).subscribe({

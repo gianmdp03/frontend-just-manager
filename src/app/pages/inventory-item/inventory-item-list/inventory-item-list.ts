@@ -1,31 +1,55 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { MatCardModule } from "@angular/material/card";
+import { MatCardModule } from '@angular/material/card';
 import { InventoryItemService } from '../../../services/inventory-item-service';
 import { InventoryItemDet } from '../../../models/inventory-item/inventory-item-det';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { ProductDet } from '../../../models/product/product-del';
+import { LocationDet } from '../../../models/location/location-det';
+import { ProductService } from '../../../services/product-service';
+import { LocationService } from '../../../services/location-service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-inventory-item-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, RouterLink],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatDividerModule,
+    RouterLink,
+    MatRadioModule,
+    MatSelectModule,
+  ],
   templateUrl: './inventory-item-list.html',
   styleUrl: './inventory-item-list.css',
 })
-export class InventoryItemList implements OnInit{
+export class InventoryItemList implements OnInit {
   totalElements = signal<number>(0);
   pageIndex = signal<number>(0);
   pageSize = signal<number>(18);
-
+  productService = inject(ProductService);
+  locationService = inject(LocationService);
   inventoryItemService = inject(InventoryItemService);
   inventoryItems = signal<InventoryItemDet[]>([]);
+  products = signal<ProductDet[]>([]);
+  locations = signal<LocationDet[]>([]);
+  option = signal<number>(0);
+  locationSearch = signal<boolean>(false);
+  productSearch = signal<boolean>(false);
+  productId = signal<string>('');
+  locationId = signal<string>('');
 
   ngOnInit(): void {
     this.getInventoryItems();
+    this.getProducts();
+    this.getLocations();
   }
 
-  getInventoryItems(){
+  getInventoryItems() {
     this.inventoryItemService.getInventoryItems(this.pageIndex(), this.pageSize()).subscribe({
       next: (data) => {
         this.inventoryItems.set(data.content);
@@ -33,26 +57,78 @@ export class InventoryItemList implements OnInit{
       },
       error: (error) => {
         console.log(error);
-      }
-    })
+      },
+    });
   }
 
-  deleteInventoryItem(id:string){
-    if(confirm("Eliminar este ítem de inventario?")){
+  handleRadio(event: any) {
+    this.productId.set('');
+    this.locationId.set('');
+    if (event.value == 1) {
+      this.locationSearch.set(false);
+      this.productSearch.set(true);
+      this.getInventoryItems();
+    } else if (event.value == 2) {
+      this.productSearch.set(false);
+      this.locationSearch.set(true);
+      this.getInventoryItems();
+    } else if (event.value == 3) {
+      this.locationSearch.set(false);
+      this.productSearch.set(false);
+      this.getExpiredInventoryItems();
+    }
+  }
+
+  getProducts() {
+    this.productService.getProducts(0, 1000).subscribe({
+      next: (data) => this.products.set(data.content),
+      error: (error) => console.log(error),
+    });
+  }
+
+  getLocations() {
+    this.locationService.getLocations(0, 1000).subscribe({
+      next: (data) => this.locations.set(data.content),
+      error: (error) => console.log(error),
+    });
+  }
+
+  getInventoryItemsByProduct(id: string) {
+    this.inventoryItemService.getInventoryItemsByProduct(id).subscribe({
+      next: (data) => this.inventoryItems.set(data.content),
+      error: (error) => console.log(error),
+    });
+  }
+
+  getInventoryItemsByLocation(id: string) {
+    this.inventoryItemService.getInventoryItemsByLocation(id).subscribe({
+      next: (data) => this.inventoryItems.set(data.content),
+      error: (error) => console.log(error),
+    });
+  }
+
+  getExpiredInventoryItems() {
+    this.inventoryItemService.getExpiredInventoryItems().subscribe({
+      next: (data) => this.inventoryItems.set(data.content),
+      error: (error) => console.log(error),
+    });
+  }
+
+  deleteInventoryItem(id: string) {
+    if (confirm('Eliminar este ítem de inventario?')) {
       this.inventoryItemService.deleteInventoryItem(id).subscribe({
-        next:()=>{
-          alert("Ítem de inventario eliminado");
-          this.inventoryItems.update(inventoryItems => inventoryItems.filter(p => p.id !== id));
+        next: () => {
+          alert('Ítem de inventario eliminado');
+          this.inventoryItems.update((inventoryItems) => inventoryItems.filter((p) => p.id !== id));
         },
-        error:(error)=>{
-          alert("Error al eliminar");
-          
-        }
+        error: (error) => {
+          alert('Error al eliminar');
+        },
       });
     }
   }
 
-  changePage(event: PageEvent){
+  changePage(event: PageEvent) {
     this.pageIndex.set(event.pageIndex);
     this.pageSize.set(event.pageSize);
     this.getInventoryItems();

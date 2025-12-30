@@ -1,6 +1,7 @@
-<div id="search">
+
+<mat-card id="search">
   <input type="text" #txtSearch placeholder="Buscar clientes" (input)="onSearch(txtSearch.value)">
-</div>
+</mat-card>
 
 <section>
   @for (customer of customers(); track customer.id) {

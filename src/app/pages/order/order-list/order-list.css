@@ -7,3 +7,13 @@ mat-card{
     padding: 1.25rem;
     background: #161215;
 }
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.buttons *{
+    max-width: 0.5;
+    margin: 1rem;
+}

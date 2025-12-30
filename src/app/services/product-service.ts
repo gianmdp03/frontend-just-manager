@@ -21,6 +21,11 @@ export class ProductService {
     return this.http.get<any>(url);
   }
 
+  searchProduct(name:string){
+    const url = `${this.apiUrl}/${name}`;
+    return this.http.get<any>(url);
+  }
+
   postProduct(data:ProductRequest){
     return this.http.post<any>(this.apiUrl, data);
   }

@@ -1,3 +1,25 @@
+<mat-card>
+  <mat-form-field appearance="outline">
+    <mat-label>Rango de fechas</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="Inicio" 
+             (dateChange)="startDate.set($event.value)">
+      
+      <input matEndDate placeholder="Fin" 
+             (dateChange)="endDate.set($event.value)">
+    </mat-date-range-input>
+    
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <div class="buttons">
+    <button matButton="filled" (click)="searchByDateRange()">Buscar</button>
+    <button matButton="filled" (click)="getOrders()">Limpiar</button>
+  </div>
+  
+</mat-card>
+
 <section>
   @for (order of orders(); track order.id) {
   <mat-card>

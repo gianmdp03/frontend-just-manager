@@ -1,3 +1,7 @@
+<mat-card>
+  <input type="text" #txtSearch placeholder="Buscar ubicaciones" (input)="onSearch(txtSearch.value)">
+</mat-card>
+
 <section>
   @for (location of locations(); track location.id) {
   <mat-card>

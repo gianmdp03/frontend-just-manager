@@ -8,10 +8,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-order-list',
-  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, DatePipe, RouterLink, MatExpansionModule],
+  imports: [MatCardModule, MatButtonModule, MatPaginatorModule, MatDividerModule, DatePipe, RouterLink, MatExpansionModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })
@@ -22,6 +25,9 @@ export class OrderList implements OnInit{
 
   orderService = inject(OrderService);
   orders=signal<OrderDet[]>([]);
+  dateSearch = signal<boolean>(true);
+  startDate = signal<Date | null>(null);
+  endDate = signal<Date | null>(null);
 
   ngOnInit(): void {
     this.getOrders();
@@ -52,6 +58,30 @@ export class OrderList implements OnInit{
         }
       });
     }
+  }
+
+  searchByDateRange() {
+    const start = this.startDate();
+    const end = this.endDate();
+
+    if (start && end) {
+      const startStr = this.formatDate(start);
+      const endStr = this.formatDate(end);
+
+      this.orderService.getOrderBySaleDateBetween(startStr, endStr).subscribe({
+        next: (data) => this.orders.set(data.content),
+        error: (err) => console.error(err)
+      });
+    } else {
+      alert("Por favor selecciona ambas fechas");
+    }
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 
   changePage(event: PageEvent){

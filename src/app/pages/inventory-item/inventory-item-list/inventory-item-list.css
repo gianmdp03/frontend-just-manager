@@ -13,3 +13,13 @@ img {
     object-fit: cover;
     object-position: center;
 }
+.b{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.b *{
+    margin: 1rem;
+    max-width: 0.5;
+}

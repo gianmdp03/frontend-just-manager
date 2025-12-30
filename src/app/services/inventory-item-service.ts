@@ -21,6 +21,21 @@ export class InventoryItemService {
     return this.http.get<any>(url);
   }
 
+  getExpiredInventoryItems(){
+    const url = `${this.apiUrl}/expired`;
+    return this.http.get<any>(url);
+  }
+
+  getInventoryItemsByProduct(id:string){
+    const url = `${this.apiUrl}/product/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  getInventoryItemsByLocation(id:string){
+    const url = `${this.apiUrl}/location/${id}`;
+    return this.http.get<any>(url);
+  }
+
   postInventoryItems(inventoryItem: InventoryItemRequest){
     return this.http.post<any>(this.apiUrl, inventoryItem);
   }

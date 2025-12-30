@@ -18,7 +18,6 @@ export class CustomerList implements OnInit {
   pageSize = signal<number>(18);
   customerService = inject(CustomerService);
   customers = signal<CustomerDet[]>([]);
-  isSearchMode = signal<boolean>(false);
 
   ngOnInit(): void {
     this.getCustomers();
@@ -48,7 +47,6 @@ export class CustomerList implements OnInit {
     this.customerService.searchCustomers(input).subscribe({
       next: (data) => {
         this.customers.set(data.content);
-        this.isSearchMode.set(true);
       },
       error: (error) => console.log(error),
     });
