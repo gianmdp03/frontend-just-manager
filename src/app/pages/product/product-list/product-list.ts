@@ -60,7 +60,7 @@ export class ProductList implements OnInit {
           this.totalElements.set(data.page.totalElements);
         }
         else{
-          this.totalElements.set(data.content.lenght);
+          this.totalElements.set(data.content.length);
         }
       },
       error: (error) => console.log(error),

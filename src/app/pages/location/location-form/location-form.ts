@@ -50,7 +50,7 @@ export class LocationForm implements OnInit{
     if (this.formGroup.invalid) {
       return;
     }
-    if(this.locationId().trim() === ""){
+    if(this.locationId().trim() !== ""){
       this.locationService.patchLocation(this.locationId(), this.formGroup.value).subscribe({
         next:()=>{
           alert("Ubicación editada correctamente");
@@ -74,7 +74,11 @@ export class LocationForm implements OnInit{
         this.router.navigate(['/locations']);
       },
       error: (error) => {
-        console.log(error);
+        if (error.status === 409 || error.status === 500) { 
+             alert('No se puede eliminar la ubicación (probablemente tiene ítems de inventario asociados).');
+          } else {
+             alert('Error al eliminar la ubicación.');
+          }
       },
     });
   }

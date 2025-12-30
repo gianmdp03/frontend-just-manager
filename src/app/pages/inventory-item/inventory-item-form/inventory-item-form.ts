@@ -77,8 +77,8 @@ export class InventoryItemForm implements OnInit {
         next:(data)=>{
           const formData = {
             ...data,
-            locationId: data.location.id,
-            productId: data.product.id
+            locationId: data.page.location.id,
+            productId: data.page.product.id
           };
           this.formGroup.patchValue(formData);
         },
@@ -93,7 +93,7 @@ export class InventoryItemForm implements OnInit {
     if (this.formGroup.invalid) {
       return;
     }
-    if(this.inventoryItemId().trim() === "" && this.isEditMode()){
+    if(this.inventoryItemId().trim() !== ""){
       this.inventoryItemService.patchInventoryItem(this.inventoryItemId(), this.formGroup.value).subscribe({
         next:()=>{
           alert("Ítem de inventario editado correctamente");

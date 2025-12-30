@@ -58,7 +58,7 @@ export class CustomerList implements OnInit {
           this.totalElements.set(data.page.totalElements);
         }
         else{
-          this.totalElements.set(data.content.lenght);
+          this.totalElements.set(data.content.length);
         }
       },
       error: (error) => console.log(error),
@@ -73,7 +73,11 @@ export class CustomerList implements OnInit {
           this.customers.update((customers) => customers.filter((p) => p.id !== id));
         },
         error: (error) => {
-          console.log(error);
+          if (error.status === 409 || error.status === 500) { 
+             alert('No se puede eliminar el cliente (probablemente tiene ventas asociadas).');
+          } else {
+             alert('Error al eliminar el cliente.');
+          }
         },
       });
     }
